@@ -7,9 +7,11 @@ import MagicLogin from "./pages/MagicLogin";
 import Me from "./pages/Me";
 import Login from "./pages/Login";
 import Root from "./Root";
-import Index from "./pages/Index";
 import LogoutPage from "./pages/Logout";
 import Items from "./pages/Items";
+import ListVenuesPage from "./pages/ListVenuesPage";
+import ShowVenuePage from "./pages/ShowVenuePage";
+import ShowItemPage from "./pages/ShowItemPage";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -23,6 +25,18 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Items/>,
+            },
+            {
+                path: "/venues",
+                element: <ListVenuesPage/>,
+            },
+            {
+                path: "/venues/:venue_id",
+                element: <ShowVenuePage/>,
+            },
+            {
+                path: "/venues/:venue_id/items/:item_id",
+                element: <ShowItemPage/>,
             },
             {
                 path: "/me",

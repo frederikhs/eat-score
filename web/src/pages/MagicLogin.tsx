@@ -13,7 +13,6 @@ export default function MagicLogin() {
 
     useEffect(() => {
         loginWithMagicLoginLink(magicLoginLinkHash as string).then(r => {
-            console.log(r)
             if (r.code === 200) {
                 navigate("/me")
             } else {

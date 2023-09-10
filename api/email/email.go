@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
-	"github.com/google/uuid"
 	"html/template"
 	"io"
 	"net/http"
@@ -53,15 +52,7 @@ func GenerateEmail(name string, link string) string {
 	return out.String()
 }
 
-func SendMail(db *database.Database, account *database.Account) error {
-	hash := uuid.New().String()
-	err := db.CreateMagicLoginLink(account, hash)
-	if err != nil {
-		return err
-	}
-
-	link := fmt.Sprintf("%s/magic-login?magic_login_link_hash=%s", os.Getenv("WEB_BASE_URI"), hash)
-
+func SendMail(db *database.Database, link string, account *database.Account) error {
 	htmlEmail := GenerateEmail(account.AccountName, link)
 
 	url := "https://api.smtp2go.com/v3/email/send"

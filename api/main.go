@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
-	"github.com/frederikhs/eat-score/email"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 )
 
 type LoginRequest struct {
@@ -18,6 +19,10 @@ type LoginRequest struct {
 
 type Login struct {
 	MagicLoginLinkHash string `json:"magic_login_link_hash"`
+}
+
+type Rating struct {
+	Value int `json:"value"`
 }
 
 func main() {
@@ -44,6 +49,271 @@ func main() {
 		}
 
 		c.JSON(http.StatusOK, items)
+	})
+
+	r.GET("/venues", func(c *gin.Context) {
+		venues, err := db.GetVenues()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, venues)
+	})
+
+	r.GET("/venues/:venue_id", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("venue_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		venue, err := db.GetVenueById(id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, venue)
+	})
+
+	r.GET("/venues/:venue_id/items", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("venue_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		venues, err := db.GetItemsByVenueId(id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, venues)
+	})
+
+	r.GET("/venues/:venue_id/items/:item_id", func(c *gin.Context) {
+		venueId, err := strconv.Atoi(c.Param("venue_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		itemId, err := strconv.Atoi(c.Param("item_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		venue, err := db.GetVenueById(venueId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if venue == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "venue does not exist",
+			})
+
+			return
+		}
+
+		item, err := db.GetItemById(itemId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if item == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "item does not exist",
+			})
+
+			return
+		}
+
+		c.JSON(http.StatusOK, item)
+	})
+
+	r.POST("/venues/:venue_id/items/:item_id/ratings", func(c *gin.Context) {
+		venueId, err := strconv.Atoi(c.Param("venue_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		itemId, err := strconv.Atoi(c.Param("item_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		venue, err := db.GetVenueById(venueId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if venue == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "venue does not exist",
+			})
+
+			return
+		}
+
+		item, err := db.GetItemById(itemId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if item == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "item does not exist",
+			})
+
+			return
+		}
+
+		var rating Rating
+		err = c.BindJSON(&rating)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		sessionId, err := c.Cookie("session_id")
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"message": "i dont know who you are",
+			})
+
+			return
+		}
+
+		session := db.GetSessionById(sessionId)
+		if session == nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"message": "i dont know who you are",
+			})
+
+			return
+		}
+
+		account, err := db.GetAccountById(session.SessionAccountId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		db.Connection.Begin()
+
+		err = db.CreateItemRating(itemId, account.AccountId, rating.Value)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		db.Connection.Commit()
+
+		c.JSON(http.StatusCreated, gin.H{
+			"message": "rating created",
+		})
+	})
+
+	r.GET("/venues/:venue_id/items/:item_id/ratings", func(c *gin.Context) {
+		venueId, err := strconv.Atoi(c.Param("venue_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		itemId, err := strconv.Atoi(c.Param("item_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		venue, err := db.GetVenueById(venueId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if venue == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "venue does not exist",
+			})
+
+			return
+		}
+
+		item, err := db.GetItemById(itemId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		if item == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "item does not exist",
+			})
+
+			return
+		}
+
+		itemRatings, err := db.GetItemRatingByItemIdAndVenueId(itemId, venueId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, itemRatings)
 	})
 
 	r.GET("/me", func(c *gin.Context) {
@@ -110,13 +380,25 @@ func main() {
 
 		db.Connection.Begin()
 
-		err = email.SendMail(db, account)
+		hash := uuid.New().String()
+		err = db.CreateMagicLoginLink(account, hash)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"message": fmt.Sprintf("something bad happened: %v", err),
 			})
 			return
 		}
+
+		link := fmt.Sprintf("%s/magic-login?magic_login_link_hash=%s", os.Getenv("WEB_BASE_URI"), hash)
+		fmt.Println(link)
+
+		//err = email.SendMail(db, link, account)
+		//if err != nil {
+		//	c.JSON(http.StatusInternalServerError, gin.H{
+		//		"message": fmt.Sprintf("something bad happened: %v", err),
+		//	})
+		//	return
+		//}
 
 		db.Connection.Commit()
 

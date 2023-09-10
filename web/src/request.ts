@@ -61,6 +61,8 @@ export const logout = async (): Promise<ApiResponse> => {
 
 export interface Item {
     item_id: number
+    venue_id: number
+    venue_name: string
     item_name: string
     item_price_dkk: number
     avg_item_rating_value: number | null
@@ -68,4 +70,45 @@ export interface Item {
 
 export const fetchAllItems = async (): Promise<ApiResponse> => {
     return await getJson(`${BASE_API_URI}/items`)
+}
+
+export const fetchItemsByVenueId = async (venue_id: number): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/venues/${venue_id}/items`)
+}
+
+export const fetchItemByVenueIdAndItemId = async (venue_id: number, item_id: number): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/venues/${venue_id}/items/${item_id}`)
+}
+
+export interface Venue {
+    venue_id: number
+    venue_name: string
+    avg_venue_rating_value: number
+}
+
+export const fetchAllVenues = async (): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/venues`)
+}
+
+export const fetchVenueById = async (venue_id: number): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/venues/${venue_id}`)
+}
+
+export interface ItemRating {
+    item_rating_id: number
+    item_id: number
+    item_name: string
+    venue_id: number
+    venue_name: string
+    item_rating_value: number
+    account_id: number
+    account_name: string
+}
+
+export const fetchItemRatingsByVenueIdAndItemId = async (venue_id: number, item_id: number): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/venues/${venue_id}/items/${item_id}/ratings`)
+}
+
+export const createItemRating = async (venue_id: number, item_id: number, value: number): Promise<ApiResponse> => {
+    return await postJson(`${BASE_API_URI}/venues/${venue_id}/items/${item_id}/ratings`, {value})
 }
