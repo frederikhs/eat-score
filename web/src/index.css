@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.vertical-slider {
+    height: 380px;
+    width: 50px;
+    border: 1px solid grey;
+}
+
+.rating-thumb.active {
+    background-color: grey;
+}
+
+.rating-mark {
+    width: 8px;
+    height: 8px;
+    /*background-color: #fff;*/
+    cursor: pointer;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.horizontal-slider .rating-track {
+    top: 20px;
+    height: 10px;
+}
+
+.horizontal-slider .rating-thumb {
+    top: 1px;
+    /*width: 50px;*/
+    /*height: 48px;*/
+    line-height: 38px;
+}
+
+.horizontal-slider .rating-mark {
+    margin: 0 calc(25px - 6px);
+    bottom: calc(50% - 6px);
+}
