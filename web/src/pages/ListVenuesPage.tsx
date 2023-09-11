@@ -7,7 +7,9 @@ export default function ListVenuesPage() {
 
     useEffect(() => {
         fetchAllVenues().then((r) => {
-            setVenues(r.response)
+            if (r.code === 200) {
+                setVenues(r.response)
+            }
         })
     }, [])
 

@@ -7,7 +7,9 @@ export default function Items() {
 
     useEffect(() => {
         fetchAllItems().then((r) => {
-            setItems(r.response)
+            if (r.code === 200) {
+                setItems(r.response)
+            }
         })
     }, [])
 
