@@ -69,9 +69,11 @@ FROM eat_score.item
 GROUP BY 1, 2, 3, 4, 5;
 
 CREATE VIEW eat_score.view_venue_with_rating AS
-SELECT venue_id, venue_name, ROUND(AVG(avg_item_rating_value), 1) as avg_venue_rating_value
-FROM eat_score.view_item_with_rating
+SELECT v.venue_id, v.venue_name, ROUND(AVG(vr.avg_item_rating_value), 1) as avg_venue_rating_value
+FROM eat_score.venue v
+         LEFT JOIN eat_score.view_item_with_rating vr ON v.venue_id = vr.venue_id
 GROUP BY 1, 2;
+
 
 INSERT INTO eat_score.account (account_email, account_name)
 VALUES ('frederik@hoergreen.dk', 'Frederik'),
@@ -82,7 +84,8 @@ INSERT INTO eat_score.venue (venue_name)
 VALUES ('Killer Kebab'),
        ('Burger Shack'),
        ('Kebabery'),
-       ('The Bagel Co');
+       ('The Bagel Co'),
+       ('Gasolin Grill');
 
 INSERT INTO eat_score.item (item_venue_id, item_name, item_price_dkk)
 VALUES (1, 'Killer Kombo Kebab', 139),
