@@ -15,8 +15,14 @@ const postJson = async (uri: string, body?: object): Promise<ApiResponse> => {
         credentials: "include",
     })
 
+    let json
+    try {
+        json = await response.json()
+    } catch (e) {
+    }
+
     return {
-        response: await response.json(),
+        response: await json,
         code: response.status
     }
 }
@@ -30,9 +36,14 @@ const getJson = async (uri: string): Promise<ApiResponse> => {
         credentials: "include",
     })
 
+    let json
+    try {
+        json = await response.json()
+    } catch (e) {
+    }
 
     return {
-        response: await response.json(),
+        response: json,
         code: response.status
     }
 }

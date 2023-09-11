@@ -20,12 +20,12 @@ export default function Login() {
 
             setHasCheckedLogin(true)
         })
-    })
+    }, [])
 
     const submit = () => {
         requestMagicLoginLink(email).then(r => {
             setReason(r.response.message)
-            if (r.code === 200) {
+            if (r.code === 201) {
                 setHasSentMail(true)
             }
         })

@@ -57,6 +57,6 @@ func GetVenueItemByRouteParams(db *database.Database, c *gin.Context) (*database
 
 func NotFound() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		response.Message(http.StatusNotFound, "empty in here")
+		c.JSON(response.Message(http.StatusNotFound, "empty in here"))
 	}
 }

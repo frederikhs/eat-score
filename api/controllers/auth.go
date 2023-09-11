@@ -13,7 +13,7 @@ import (
 func Logout() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		c.SetCookie("session_id", "", -1, "/", "localhost", false, true)
-		response.Message(http.StatusOK, "you are now logged out")
+		c.JSON(response.Message(http.StatusOK, "you are now logged out"))
 	}
 }
 
@@ -37,7 +37,7 @@ func LoginRequest(db *database.Database) func(c *gin.Context) {
 		}
 
 		if account == nil {
-			response.Message(http.StatusBadRequest, "account does not exist")
+			c.JSON(response.Message(http.StatusBadRequest, "account does not exist"))
 			return
 		}
 
@@ -71,7 +71,7 @@ func LoginRequest(db *database.Database) func(c *gin.Context) {
 			return
 		}
 
-		response.Message(http.StatusOK, "check your inbox")
+		c.JSON(response.Message(http.StatusCreated, "check your inbox"))
 	}
 }
 
@@ -84,7 +84,7 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 		if sessionId, err := c.Cookie("session_id"); err == nil {
 			session := db.GetSessionById(sessionId)
 			if session != nil {
-				response.Message(http.StatusOK, "hi again")
+				c.JSON(response.Message(http.StatusOK, "hi again"))
 				return
 			}
 		}
@@ -98,12 +98,12 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 
 		link := db.GetMagicLoginLinkByLinkHash(l.MagicLoginLinkHash)
 		if link == nil {
-			response.Message(http.StatusBadRequest, "no magic link found by that hash")
+			c.JSON(response.Message(http.StatusBadRequest, "no magic link found by that hash"))
 			return
 		}
 
 		if link.MagicLoginLinkUsedAt != nil {
-			response.Message(http.StatusBadRequest, "magic link already used")
+			c.JSON(response.Message(http.StatusBadRequest, "magic link already used"))
 			return
 		}
 
@@ -142,6 +142,6 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 		}
 
 		c.SetCookie("session_id", sessionId, 60*60*24*365, "/", "localhost", false, true)
-		response.Message(http.StatusOK, fmt.Sprintf("hello account id: %d", account.AccountId))
+		c.JSON(response.Message(http.StatusCreated, fmt.Sprintf("hello account id: %d", account.AccountId)))
 	}
 }

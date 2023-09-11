@@ -15,7 +15,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
         }
 
         return [
-            {to: "/", name: "All"},
+            {to: "/", name: "Items"},
             {to: "/venues", name: "Venues"},
             {to: "/me", name: props.account.account_name},
             {to: "/logout", name: <span className={"text-red-500"}>Logout</span>},

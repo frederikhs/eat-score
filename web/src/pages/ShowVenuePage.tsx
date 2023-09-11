@@ -29,7 +29,9 @@ export default function ShowVenuePage() {
 
     return (
         <div className={"space-y-10"}>
+            <h1 className={"heading-default"}>Venue</h1>
             <ListVenue venue={venue}/>
+            <h1 className={"heading-default"}>Items</h1>
             {items !== null && <ListItems items={items} show_venue={false}/>}
         </div>
     );

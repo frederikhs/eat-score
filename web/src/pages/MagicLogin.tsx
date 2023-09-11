@@ -13,14 +13,14 @@ export default function MagicLogin() {
 
     useEffect(() => {
         loginWithMagicLoginLink(magicLoginLinkHash as string).then(r => {
-            if (r.code === 200) {
-                navigate("/me")
+            if (r.code === 201) {
+                navigate("/")
             } else {
                 setLoginError(true)
                 setLoginErrorReason(r.response.message)
             }
         })
-    })
+    }, [])
 
     return (
         <div>

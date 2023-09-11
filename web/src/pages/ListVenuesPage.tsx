@@ -20,12 +20,15 @@ export default function ListVenuesPage() {
     }
 
     return (
-        <div className={"space-y-10"}>
-            {venues.map((venue, index) => {
-                return (
-                    <ListVenue key={index} venue={venue}/>
-                )
-            })}
+        <div>
+            <h1 className={"heading-default"}>Venues</h1>
+            <div className={"space-y-10 sm:columns-2"}>
+                {venues.map((venue, index) => {
+                    return (
+                        <ListVenue key={index} venue={venue}/>
+                    )
+                })}
+            </div>
         </div>
     );
 }

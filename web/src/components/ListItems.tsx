@@ -1,9 +1,11 @@
 import {Item} from "../request";
 import ReactSlider from "react-slider";
 import React from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function ListItems(props: { items: Item[], show_venue: boolean }) {
+    const navigate = useNavigate()
+
     return (
         <table className="w-full text-left ">
             <thead className="uppercase bg-gray-50">
@@ -17,11 +19,13 @@ export default function ListItems(props: { items: Item[], show_venue: boolean })
             <tbody>
             {props.items.map((item, index) => {
                 return (
-                    <tr key={index} className={"even:bg-gray-50 odd:bg-white hover:opacity-80 hover:cursor-pointer hover:text-blue-500"}>
+                    <tr
+                        onClick={() => navigate(`/venues/${item.venue_id}/items/${item.item_id}`)}
+                        key={index}
+                        className={"even:bg-gray-50 odd:bg-white hover:opacity-80 hover:cursor-pointer hover:text-blue-500"}
+                    >
                         <td className="px-6 py-4">
-                            <Link to={`/venues/${item.venue_id}/items/${item.item_id}`}>
-                                {item.item_name}
-                            </Link>
+                            {item.item_name}
                         </td>
                         {props.show_venue && <td className="px-6 py-4">{item.venue_name}</td>}
                         <td className="px-6 py-4">{item.item_price_dkk}</td>
