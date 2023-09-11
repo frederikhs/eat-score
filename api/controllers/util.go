@@ -2,10 +2,16 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"github.com/frederikhs/eat-score/database"
+	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+)
+
+var (
+	ErrCouldNotParseInt = "could not parse as integer"
 )
 
 type ErrorResponse struct {
@@ -15,7 +21,7 @@ type ErrorResponse struct {
 func GetVenueByRouteParam(db *database.Database, c *gin.Context) (*database.Venue, error) {
 	id, err := strconv.Atoi(c.Param("venue_id"))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("could not parse venue_id: %v", ErrCouldNotParseInt)
 	}
 
 	venue, err := db.GetVenueById(id)
@@ -34,7 +40,7 @@ func GetVenueItemByRouteParams(db *database.Database, c *gin.Context) (*database
 
 	itemId, err := strconv.Atoi(c.Param("item_id"))
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("could not parse item_id: %v", ErrCouldNotParseInt)
 	}
 
 	item, err := db.GetItemById(itemId)
@@ -51,6 +57,6 @@ func GetVenueItemByRouteParams(db *database.Database, c *gin.Context) (*database
 
 func NotFound() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, gin.H{"message": "empty in here"})
+		response.Message(http.StatusNotFound, "empty in here")
 	}
 }

@@ -16,6 +16,10 @@ func (db *Database) GetItems() ([]Item, error) {
 		return nil, err
 	}
 
+	if items == nil {
+		items = []Item{}
+	}
+
 	return items, nil
 }
 
@@ -24,6 +28,10 @@ func (db *Database) GetItemsByVenueId(venueId int) ([]Item, error) {
 	err := db.Connection.Select(&items, "SELECT * FROM eat_score.view_item_with_rating WHERE venue_id = $1", venueId)
 	if err != nil {
 		return nil, err
+	}
+
+	if items == nil {
+		items = []Item{}
 	}
 
 	return items, nil

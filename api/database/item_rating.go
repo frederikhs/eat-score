@@ -18,6 +18,10 @@ func (db *Database) GetItemRatingByItemIdAndVenueId(itemId int, venueId int) ([]
 		return nil, err
 	}
 
+	if itemRatings == nil {
+		itemRatings = []ItemRating{}
+	}
+
 	return itemRatings, nil
 }
 

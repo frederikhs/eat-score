@@ -13,6 +13,10 @@ func (db *Database) GetVenues() ([]Venue, error) {
 		return nil, err
 	}
 
+	if venues == nil {
+		venues = []Venue{}
+	}
+
 	return venues, nil
 }
 
