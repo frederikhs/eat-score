@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
+	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
@@ -12,9 +13,7 @@ import (
 func Logout() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		c.SetCookie("session_id", "", -1, "/", "localhost", false, true)
-		c.JSON(http.StatusOK, gin.H{
-			"message": "you are now logged out",
-		})
+		response.Message(http.StatusOK, "you are now logged out")
 	}
 }
 
@@ -27,35 +26,31 @@ func LoginRequest(db *database.Database) func(c *gin.Context) {
 		var lr LoginRequest
 		err := c.BindJSON(&lr)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
 		account, err := db.GetAccountByEmail(lr.Email)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
 		if account == nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"message": "account does not exist",
-			})
+			response.Message(http.StatusBadRequest, "account does not exist")
 			return
 		}
 
-		db.Connection.Begin()
+		err = db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
 
 		hash := uuid.New().String()
 		err = db.CreateMagicLoginLink(account, hash)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
@@ -70,11 +65,13 @@ func LoginRequest(db *database.Database) func(c *gin.Context) {
 		//	return
 		//}
 
-		db.Connection.Commit()
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"message": "check your inbox",
-		})
+		response.Message(http.StatusOK, "check your inbox")
 	}
 }
 
@@ -87,10 +84,7 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 		if sessionId, err := c.Cookie("session_id"); err == nil {
 			session := db.GetSessionById(sessionId)
 			if session != nil {
-				c.JSON(http.StatusOK, gin.H{
-					"message": "welcome",
-				})
-
+				response.Message(http.StatusOK, "hi again")
 				return
 			}
 		}
@@ -98,45 +92,37 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 		var l Login
 		err := c.BindJSON(&l)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": "something bad happened",
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
 		link := db.GetMagicLoginLinkByLinkHash(l.MagicLoginLinkHash)
 		if link == nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"message": "no magic link found by that hash",
-			})
-
+			response.Message(http.StatusBadRequest, "no magic link found by that hash")
 			return
 		}
 
 		if link.MagicLoginLinkUsedAt != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"message": "magic link already used",
-			})
-
+			response.Message(http.StatusBadRequest, "magic link already used")
 			return
 		}
 
 		account, err := db.GetAccountById(link.MagicLoginLinkAccountId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
-		db.Connection.Begin()
+		err = db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
 
 		err = db.SetMagicLoginLinkUsedAt(l.MagicLoginLinkHash)
 		if err != nil {
 			db.Connection.Rollback()
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
@@ -145,18 +131,17 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 		err = db.CreateSession(sessionId, account, link)
 		if err != nil {
 			db.Connection.Rollback()
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": fmt.Sprintf("something bad happened: %v", err),
-			})
+			c.JSON(response.Error(err))
 			return
 		}
 
-		db.Connection.Commit()
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
 
 		c.SetCookie("session_id", sessionId, 60*60*24*365, "/", "localhost", false, true)
-
-		c.JSON(http.StatusOK, gin.H{
-			"message": fmt.Sprintf("hello account id: %d", account.AccountId),
-		})
+		response.Message(http.StatusOK, fmt.Sprintf("hello account id: %d", account.AccountId))
 	}
 }
