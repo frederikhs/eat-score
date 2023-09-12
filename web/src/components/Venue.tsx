@@ -8,7 +8,11 @@ export default function ListVenue(props: { venue: Venue }) {
         <div className="rounded overflow-hidden shadow-md">
             <Link to={"/venues/" + props.venue.venue_id}>
                 <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{props.venue.venue_name}</div>
+                    <div className={"flex justify-between items-center mb-2"}>
+                        <div className="font-bold text-xl ">{props.venue.venue_name}</div>
+                        <p className={"text-black/25 text-xs"}>Created by {props.venue.venue_created_by_account_name}</p>
+                    </div>
+
                     {/*<p className="text-gray-700 text-base">*/}
                     {/*    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.*/}
                     {/*</p>*/}
