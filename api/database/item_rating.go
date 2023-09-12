@@ -13,7 +13,7 @@ type ItemRating struct {
 
 func (db *Database) GetItemRatingByItemIdAndVenueId(itemId int, venueId int) ([]ItemRating, error) {
 	var itemRatings []ItemRating
-	err := db.Connection.Select(&itemRatings, "SELECT * FROM eat_score.view_item_rating WHERE item_id = $1 AND venue_id = $2", itemId, venueId)
+	err := db.Connection.Select(&itemRatings, "SELECT * FROM eat_score.view_item_rating WHERE venue_deleted_at IS NULL AND item_id = $1 AND venue_id = $2", itemId, venueId)
 	if err != nil {
 		return nil, err
 	}

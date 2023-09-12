@@ -61,10 +61,10 @@ export default function Navigation(props: { authed: boolean, account?: Account }
 function MenuLink(props: { link: Link }) {
     return (
         <NavLink
-            className={({isActive}) => "block py-2 pl-3 pr-4 rounded " + (isActive ? "text-white bg-blue-700" : "text-gray-900 hover:bg-gray-100")}
+            className={({isActive}) => "block py-2 px-3 rounded " + (isActive ? "text-black bg-blue-200" : "text-gray-900 hover:bg-gray-100 [&>*]:grayscale")}
             to={props.link.to}
         >
-            <div className={"flex items-center"}><img className={"h-6 mr-3"} src={props.link.image} alt={props.link.name}/> {props.link.name} </div>
+            <div className={"flex items-center"}><img className={"h-6 mr-3 "} src={props.link.image} alt={props.link.name}/> {props.link.name} </div>
         </NavLink>
     )
 }

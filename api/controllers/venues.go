@@ -45,6 +45,11 @@ func GetVenueItemsByVenueId(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
+		if venue == nil {
+			c.JSON(response.ResourceNotFound())
+			return
+		}
+
 		items, err := db.GetItemsByVenueId(venue.VenueId)
 		if err != nil {
 			c.JSON(response.Error(err))
@@ -155,6 +160,11 @@ func CreateVenue(db *database.Database) gin.HandlerFunc {
 		}
 
 		if existingVenue != nil {
+			if existingVenue.VenueDeletedAt != nil {
+				c.JSON(response.Message(http.StatusBadRequest, "a deleted venue with this name already exist"))
+				return
+			}
+
 			c.JSON(response.ResourceAlreadyExists())
 			return
 		}
@@ -167,6 +177,7 @@ func CreateVenue(db *database.Database) gin.HandlerFunc {
 
 		err = db.CreateVenue(venue.VenueName, authedContext.Account.AccountId)
 		if err != nil {
+			_ = db.Connection.Rollback()
 			c.JSON(response.Error(err))
 			return
 		}
@@ -177,6 +188,54 @@ func CreateVenue(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(response.Message(http.StatusCreated, "venue created"))
+		newVenue, err := db.GetVenueByName(venue.VenueName)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusCreated, newVenue)
+	}
+}
+
+func DeleteVenue(db *database.Database) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		venue, err := GetVenueByRouteParam(db, c)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		if venue == nil {
+			c.JSON(response.ResourceNotFound())
+			return
+		}
+
+		authedContext := middleware.MustGetAuthedContext(c)
+		if venue.VenueCreatedByAccountId != authedContext.Account.AccountId {
+			c.JSON(response.Message(http.StatusForbidden, "you cannot delete venues you have not created"))
+			return
+		}
+
+		err = db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.DeleteVenueById(venue.VenueId)
+		if err != nil {
+			_ = db.Connection.Rollback()
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, venue)
 	}
 }

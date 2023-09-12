@@ -1,8 +1,10 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {createVenue, fetchAllVenues, Venue} from "../request";
 import ListVenue from "../components/Venue";
+import {useNavigate} from "react-router-dom";
 
 export default function ListVenuesPage() {
+    const navigate = useNavigate()
     const [venues, setVenues] = useState<Venue[] | null>(null);
     const [venueName, setVenueName] = useState<string>("");
     const [venueCreatedMessage, setVenueCreationMessage] = useState<string | null>(null);
@@ -23,8 +25,8 @@ export default function ListVenuesPage() {
         createVenue(venueName).then(r => {
             setVenueCreationMessage(r.response.message)
             if (r.code === 201) {
-                fetchVenues()
                 setVenueName("")
+                navigate("/venues/" + r.response.venue_id)
             }
         })
     }

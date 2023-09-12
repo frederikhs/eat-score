@@ -5,9 +5,9 @@ interface ApiResponse {
 
 const BASE_API_URI = process.env.REACT_APP_BASE_API_URI as string
 
-const postJson = async (uri: string, body?: object): Promise<ApiResponse> => {
+const RequestWithJsonBody = async (method: string, uri: string, body?: object): Promise<ApiResponse> => {
     const response = await fetch(uri, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -22,9 +22,17 @@ const postJson = async (uri: string, body?: object): Promise<ApiResponse> => {
     }
 
     return {
-        response: await json,
+        response: json,
         code: response.status
     }
+}
+
+const postJson = async (uri: string, body?: object): Promise<ApiResponse> => {
+    return RequestWithJsonBody('POST', uri, body)
+}
+
+const deleteJson = async (uri: string, body?: object): Promise<ApiResponse> => {
+    return RequestWithJsonBody('DELETE', uri, body)
 }
 
 const getJson = async (uri: string): Promise<ApiResponse> => {
@@ -47,6 +55,7 @@ const getJson = async (uri: string): Promise<ApiResponse> => {
         code: response.status
     }
 }
+
 
 export interface Account {
     account_id: number
@@ -111,6 +120,10 @@ export const fetchVenueById = async (venue_id: number): Promise<ApiResponse> => 
 
 export const createVenue = async (venue_name: string): Promise<ApiResponse> => {
     return await postJson(`${BASE_API_URI}/venues`, {venue_name})
+}
+
+export const deleteVenue = async (venue_id: number): Promise<ApiResponse> => {
+    return await deleteJson(`${BASE_API_URI}/venues/${venue_id}`)
 }
 
 export interface ItemRating {
