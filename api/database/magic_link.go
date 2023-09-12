@@ -8,7 +8,7 @@ type MagicLoginLink struct {
 	MagicLoginLinkId        int        `db:"magic_login_link_id"`
 	MagicLoginLinkAccountId int        `db:"magic_login_link_account_id"`
 	MagicLoginLinkHash      string     `db:"magic_login_link_hash"`
-	MagicLoginLinkIssuedAt  *time.Time `db:"magic_login_link_issued_at"`
+	MagicLoginLinkCreatedAt time.Time  `db:"magic_login_link_created_at"`
 	MagicLoginLinkUsedAt    *time.Time `db:"magic_login_link_used_at"`
 }
 

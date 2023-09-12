@@ -1,9 +1,14 @@
 package database
 
+import "time"
+
 type Venue struct {
-	VenueId             int      `db:"venue_id" json:"venue_id"`
-	VenueName           string   `db:"venue_name" json:"venue_name"`
-	AvgVenueRatingValue *float64 `db:"avg_venue_rating_value" json:"avg_venue_rating_value"`
+	VenueId                   int       `db:"venue_id" json:"venue_id"`
+	VenueName                 string    `db:"venue_name" json:"venue_name"`
+	VenueCreatedAt            time.Time `db:"venue_created_at" json:"venue_created_at"`
+	AvgVenueRatingValue       *float64  `db:"avg_venue_rating_value" json:"avg_venue_rating_value"`
+	VenueCreatedByAccountId   int       `db:"venue_created_by_account_id" json:"venue_created_by_account_id"`
+	VenueCreatedByAccountName string    `db:"venue_created_by_account_name" json:"venue_created_by_account_name"`
 }
 
 func (db *Database) GetVenues() ([]Venue, error) {

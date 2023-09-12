@@ -7,8 +7,8 @@ type ItemRating struct {
 	VenueId         int    `db:"venue_id" json:"venue_id"`
 	VenueName       string `db:"venue_name" json:"venue_name"`
 	ItemRatingValue int    `db:"item_rating_value" json:"item_rating_value"`
-	AccountId       int    `db:"account_id" json:"account_id"`
-	AccountName     string `db:"account_name" json:"account_name"`
+	AccountId       int    `db:"item_rating_account_id" json:"item_rating_account_id"`
+	AccountName     string `db:"item_rating_account_name" json:"item_rating_account_name"`
 }
 
 func (db *Database) GetItemRatingByItemIdAndVenueId(itemId int, venueId int) ([]ItemRating, error) {

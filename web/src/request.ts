@@ -76,6 +76,8 @@ export interface Item {
     venue_name: string
     item_name: string
     item_price_dkk: number
+    item_created_by_account_id: number
+    item_created_by_account_name: string
     avg_item_rating_value: number | null
 }
 
@@ -95,6 +97,8 @@ export interface Venue {
     venue_id: number
     venue_name: string
     avg_venue_rating_value: number
+    venue_created_by_account_id: number
+    venue_created_by_account_name: string
 }
 
 export const fetchAllVenues = async (): Promise<ApiResponse> => {
@@ -112,8 +116,8 @@ export interface ItemRating {
     venue_id: number
     venue_name: string
     item_rating_value: number
-    account_id: number
-    account_name: string
+    item_rating_account_id: number
+    item_rating_account_name: string
 }
 
 export const fetchItemRatingsByVenueIdAndItemId = async (venue_id: number, item_id: number): Promise<ApiResponse> => {

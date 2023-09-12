@@ -1,9 +1,13 @@
 package database
 
+import "time"
+
 type Account struct {
-	AccountId    int    `json:"account_id" db:"account_id"`
-	AccountEmail string `json:"account_email" db:"account_email"`
-	AccountName  string `json:"account_name" db:"account_name"`
+	AccountId        int        `json:"account_id" db:"account_id"`
+	AccountEmail     string     `json:"account_email" db:"account_email"`
+	AccountName      string     `json:"account_name" db:"account_name"`
+	AccountCreatedAt time.Time  `json:"account_created_at" db:"account_created_at"`
+	AccountDeletedAt *time.Time `json:"-" db:"account_deleted_at"`
 }
 
 func (db *Database) GetAccountById(id int) (*Account, error) {

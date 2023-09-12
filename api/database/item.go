@@ -1,12 +1,14 @@
 package database
 
 type Item struct {
-	ItemId             int      `db:"item_id" json:"item_id"`
-	VenueId            int      `db:"venue_id" json:"venue_id"`
-	VenueName          string   `db:"venue_name" json:"venue_name"`
-	ItemName           string   `db:"item_name" json:"item_name"`
-	ItemPriceDKK       int      `db:"item_price_dkk" json:"item_price_dkk"`
-	AvgItemRatingValue *float64 `db:"avg_item_rating_value" json:"avg_item_rating_value"`
+	ItemId                   int      `db:"item_id" json:"item_id"`
+	VenueId                  int      `db:"venue_id" json:"venue_id"`
+	VenueName                string   `db:"venue_name" json:"venue_name"`
+	ItemName                 string   `db:"item_name" json:"item_name"`
+	ItemPriceDKK             int      `db:"item_price_dkk" json:"item_price_dkk"`
+	ItemCreatedByAccountId   int      `db:"item_created_by_account_id" json:"item_created_by_account_id"`
+	ItemCreatedByAccountName string   `db:"item_created_by_account_name" json:"item_created_by_account_name"`
+	AvgItemRatingValue       *float64 `db:"avg_item_rating_value" json:"avg_item_rating_value"`
 }
 
 func (db *Database) GetItems() ([]Item, error) {
