@@ -22,6 +22,7 @@ func registerAuthedRoutes(r *gin.RouterGroup, db *database.Database) {
 	r.GET("/me", controllers.AccountInfo())
 
 	r.GET("/venues", controllers.GetAllVenues(db))
+	r.POST("/venues", controllers.CreateVenue(db))
 	r.GET("/venues/:venue_id", controllers.GetVenueById(db))
 	r.GET("/venues/:venue_id/items", controllers.GetVenueItemsByVenueId(db))
 	r.GET("/venues/:venue_id/items/:item_id", controllers.GetVenueItemByVenueIdAndItemId(db))

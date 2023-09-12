@@ -38,3 +38,22 @@ func (db *Database) GetVenueById(venueId int) (*Venue, error) {
 
 	return &venues[0], nil
 }
+
+func (db *Database) GetVenueByName(venueName string) (*Venue, error) {
+	var venues []Venue
+	err := db.Connection.Select(&venues, "SELECT * FROM eat_score.view_venue_with_rating WHERE venue_name = $1", venueName)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(venues) != 1 {
+		return nil, nil
+	}
+
+	return &venues[0], nil
+}
+
+func (db *Database) CreateVenue(venueName string, venueCreatedByAccountId int) error {
+	_, err := db.Connection.Exec("INSERT INTO eat_score.venue (venue_name, venue_created_by_account_id) VALUES ($1, $2)", venueName, venueCreatedByAccountId)
+	return err
+}

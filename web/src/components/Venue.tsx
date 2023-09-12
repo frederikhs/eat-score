@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function ListVenue(props: { venue: Venue }) {
     return (
-        <div className="rounded overflow-hidden shadow-lg">
+        <div className="rounded overflow-hidden shadow-md">
             <Link to={"/venues/" + props.venue.venue_id}>
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{props.venue.venue_name}</div>

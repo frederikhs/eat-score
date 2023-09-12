@@ -1,17 +1,37 @@
-import React, {useEffect, useState} from 'react';
-import {fetchAllVenues, Venue} from "../request";
+import React, {useEffect, useMemo, useState} from 'react';
+import {createVenue, fetchAllVenues, Venue} from "../request";
 import ListVenue from "../components/Venue";
 
 export default function ListVenuesPage() {
     const [venues, setVenues] = useState<Venue[] | null>(null);
+    const [venueName, setVenueName] = useState<string>("");
+    const [venueCreatedMessage, setVenueCreationMessage] = useState<string | null>(null);
 
     useEffect(() => {
+        fetchVenues()
+    }, [])
+
+    const fetchVenues = () => {
         fetchAllVenues().then((r) => {
             if (r.code === 200) {
                 setVenues(r.response)
             }
         })
-    }, [])
+    }
+
+    const createNewVenue = () => {
+        createVenue(venueName).then(r => {
+            setVenueCreationMessage(r.response.message)
+            if (r.code === 201) {
+                fetchVenues()
+                setVenueName("")
+            }
+        })
+    }
+
+    const canCreateNewVenue = useMemo(() => {
+        return venueName.length >= 3
+    }, [venueName]);
 
     if (venues === null) {
         return (
@@ -22,6 +42,26 @@ export default function ListVenuesPage() {
     return (
         <div>
             <h1 className={"heading-default"}>Venues</h1>
+            <div className="rounded overflow-hidden shadow-md mb-4">
+                <div className="px-6 py-4 space-x-4 flex">
+                    <input
+                        value={venueName}
+                        name={"venue_name"}
+                        placeholder={"The Burger Shop"}
+                        autoComplete={"off"}
+                        onChange={e => setVenueName(e.target.value)}
+                        className="text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                    />
+                    <button
+                        disabled={!canCreateNewVenue}
+                        onClick={() => createNewVenue()}
+                        className={"flex-none text-white font-bold py-2 px-4 rounded " + (canCreateNewVenue ? "bg-blue-700 hover:bg-blue-600" : "bg-blue-200 hover:cursor-not-allowed")}
+                    >Create new Venue
+                    </button>
+                </div>
+                {venueCreatedMessage !== null && <p className={"text-center mb-2"}>{venueCreatedMessage}</p>}
+            </div>
             <div className={"space-y-10 sm:columns-2"}>
                 {venues.map((venue, index) => {
                     return (

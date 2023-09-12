@@ -109,6 +109,10 @@ export const fetchVenueById = async (venue_id: number): Promise<ApiResponse> => 
     return await getJson(`${BASE_API_URI}/venues/${venue_id}`)
 }
 
+export const createVenue = async (venue_name: string): Promise<ApiResponse> => {
+    return await postJson(`${BASE_API_URI}/venues`, {venue_name})
+}
+
 export interface ItemRating {
     item_rating_id: number
     item_id: number

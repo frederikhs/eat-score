@@ -13,6 +13,10 @@ func ResourceNotFound() (int, any) {
 	return Message(http.StatusNotFound, "resource not found")
 }
 
+func ResourceAlreadyExists() (int, any) {
+	return Message(http.StatusBadRequest, "resource already exists")
+}
+
 func Error(err error) (int, any) {
 	return Message(http.StatusInternalServerError, err.Error())
 }

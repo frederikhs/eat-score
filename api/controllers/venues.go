@@ -127,3 +127,56 @@ func CreateItemRatingByVenueIdAndItemId(db *database.Database) gin.HandlerFunc {
 		c.JSON(response.Message(http.StatusCreated, "rating created"))
 	}
 }
+
+func CreateVenue(db *database.Database) gin.HandlerFunc {
+	type Venue struct {
+		VenueName string `json:"venue_name"`
+	}
+
+	return func(c *gin.Context) {
+		var venue Venue
+		err := c.BindJSON(&venue)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		if len(venue.VenueName) < 3 {
+			c.JSON(response.Message(http.StatusBadRequest, "length of venue name must be >= 3"))
+			return
+		}
+
+		authedContext := middleware.MustGetAuthedContext(c)
+
+		existingVenue, err := db.GetVenueByName(venue.VenueName)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		if existingVenue != nil {
+			c.JSON(response.ResourceAlreadyExists())
+			return
+		}
+
+		err = db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.CreateVenue(venue.VenueName, authedContext.Account.AccountId)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(response.Message(http.StatusCreated, "venue created"))
+	}
+}

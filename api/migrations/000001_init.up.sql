@@ -31,7 +31,8 @@ CREATE TABLE eat_score.venue
     venue_id                    SERIAL PRIMARY KEY,
     venue_name                  VARCHAR                                       NOT NULL,
     venue_created_at            TIMESTAMPTZ                                   NOT NULL DEFAULT NOW(),
-    venue_created_by_account_id INT REFERENCES eat_score.account (account_id) NOT NULL
+    venue_created_by_account_id INT REFERENCES eat_score.account (account_id) NOT NULL,
+    UNIQUE (venue_name)
 );
 
 CREATE TABLE eat_score.item
