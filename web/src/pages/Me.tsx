@@ -4,9 +4,16 @@ import {useAccount} from "../Root";
 export default function Me() {
     const {account} = useAccount()
 
+    if (account === undefined) {
+        return null
+    }
+
     return (
-        <div>
-            <h1 className={"heading-default"}>Hello {account.account_name} {"<"}{account.account_email}{">"}</h1>
+        <div className={"flex justify-center"}>
+            <div className={"text-center"}>
+                <h1 className={"heading-default"}>Hello {account.account_name}</h1>
+                <p>{"<"}{account.account_email}{">"}</p>
+            </div>
         </div>
     );
 }

@@ -24,8 +24,8 @@ type LoggedInInfo struct {
 const authedContextKey = "authed_context"
 
 type AuthedContext struct {
-	Session *database.Session
-	Account *database.Account
+	Session *database.Session `json:"-"`
+	Account *database.Account `json:"account"`
 }
 
 func MustGetAuthedContext(c *gin.Context) AuthedContext {

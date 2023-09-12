@@ -5,7 +5,8 @@ import {Account} from "../request";
 
 interface Link {
     to: string
-    name: React.ReactNode
+    image: any
+    name: string
 }
 
 export default function Navigation(props: { authed: boolean, account?: Account }) {
@@ -15,10 +16,10 @@ export default function Navigation(props: { authed: boolean, account?: Account }
         }
 
         return [
-            {to: "/", name: "Items"},
-            {to: "/venues", name: "Venues"},
-            {to: "/me", name: props.account.account_name},
-            {to: "/logout", name: <span className={"text-red-500"}>Logout</span>},
+            {to: "/", name: "Items", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f60b.png"},
+            {to: "/venues", name: "Venues", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f3df-fe0f.png"},
+            {to: "/me", name: props.account.account_name, image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f464.png"},
+            {to: "/logout", name: "Logout", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f44b.png"}
         ]
     }, [props.account]);
 
@@ -49,7 +50,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
                                 <MenuLink key={index} link={link}/>
                             )
                         })}
-                        {!props.authed && <MenuLink link={{to: "/login", name: "Login"}}/>}
+                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f511.png"}}/>}
                     </div>
                 </div>
             </div>
@@ -62,6 +63,8 @@ function MenuLink(props: { link: Link }) {
         <NavLink
             className={({isActive}) => "block py-2 pl-3 pr-4 rounded " + (isActive ? "text-white bg-blue-700" : "text-gray-900 hover:bg-gray-100")}
             to={props.link.to}
-        >{props.link.name}</NavLink>
+        >
+            <div className={"flex items-center"}><img className={"h-6 mr-3"} src={props.link.image} alt={props.link.name}/> {props.link.name} </div>
+        </NavLink>
     )
 }
