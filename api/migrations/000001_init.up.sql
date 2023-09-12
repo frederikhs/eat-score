@@ -61,6 +61,7 @@ SELECT ir.item_rating_id,
        i.item_name,
        v.venue_id,
        v.venue_name,
+       v.venue_deleted_at,
        ir.item_rating_value,
        ir.item_rating_account_id,
        a.account_name as item_rating_account_name

@@ -1,14 +1,17 @@
 package database
 
+import "time"
+
 type ItemRating struct {
-	ItemRatingId    int    `db:"item_rating_id" json:"item_rating_id"`
-	ItemId          int    `db:"item_id" json:"item_id"`
-	ItemName        string `db:"item_name" json:"item_name"`
-	VenueId         int    `db:"venue_id" json:"venue_id"`
-	VenueName       string `db:"venue_name" json:"venue_name"`
-	ItemRatingValue int    `db:"item_rating_value" json:"item_rating_value"`
-	AccountId       int    `db:"item_rating_account_id" json:"item_rating_account_id"`
-	AccountName     string `db:"item_rating_account_name" json:"item_rating_account_name"`
+	ItemRatingId    int        `db:"item_rating_id" json:"item_rating_id"`
+	ItemId          int        `db:"item_id" json:"item_id"`
+	ItemName        string     `db:"item_name" json:"item_name"`
+	VenueId         int        `db:"venue_id" json:"venue_id"`
+	VenueName       string     `db:"venue_name" json:"venue_name"`
+	VenueDeletedAt  *time.Time `db:"venue_deleted_at" json:"venue_deleted_at"`
+	ItemRatingValue int        `db:"item_rating_value" json:"item_rating_value"`
+	AccountId       int        `db:"item_rating_account_id" json:"item_rating_account_id"`
+	AccountName     string     `db:"item_rating_account_name" json:"item_rating_account_name"`
 }
 
 func (db *Database) GetItemRatingByItemIdAndVenueId(itemId int, venueId int) ([]ItemRating, error) {
