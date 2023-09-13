@@ -14,14 +14,14 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
     }
 
     return (
-        <div className={""}>
+        <div>
             <ReactSlider
                 className="w-100 h-[50px] horizontal-slider"
                 markClassName="rating-mark h-[48px] w-[50px]"
                 min={0}
                 max={10}
                 value={rating}
-                onChange={(value, index) => setRating(value)}
+                onChange={(value) => setRating(value)}
                 thumbClassName="text-center bg-gray-500 text-white rounded border-[5px] border-transparent rating-thumb hover:cursor-pointer"
                 trackClassName="rating-track bg-gray-300 relative"
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}

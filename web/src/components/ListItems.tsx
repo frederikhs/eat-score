@@ -44,6 +44,7 @@ export default function ListItems(props: { items: Item[], show_venue: boolean })
                                     renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
                                 />
                             }
+                            {item.avg_item_rating_value === null && <span className={"flex justify-center"}>No ratings yet</span>}
                         </td>
                     </tr>
                 )

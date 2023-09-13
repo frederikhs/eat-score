@@ -48,6 +48,7 @@ export default function ShowItemPage() {
             <h1 className={"heading-default"}>Item</h1>
             {item !== null && <ListItems items={[item]} show_venue={false}/>}
 
+            <h1 className={"heading-default"}>Rate this item</h1>
             {venue !== null && item !== null && <Rate venue_id={venue.venue_id} item_id={item.item_id} onSubmit={() => fetchAll()}/>}
 
             <h1 className={"heading-default"}>Account ratings</h1>
