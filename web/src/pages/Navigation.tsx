@@ -2,11 +2,13 @@ import knife_fork_plate from "../assets/knife_fork_plate.png";
 import React, {useMemo} from "react";
 import {NavLink} from "react-router-dom";
 import {Account} from "../request";
+import {FaArrowRightFromBracket, FaBurger, FaShop} from "react-icons/fa6";
+import {FaKey, FaUser} from "react-icons/fa";
 
 interface Link {
     to: string
-    image: any
     name: string
+    icon: React.ReactNode
 }
 
 export default function Navigation(props: { authed: boolean, account?: Account }) {
@@ -16,10 +18,10 @@ export default function Navigation(props: { authed: boolean, account?: Account }
         }
 
         return [
-            {to: "/", name: "Items", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f60b.png"},
-            {to: "/venues", name: "Venues", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f3df-fe0f.png"},
-            {to: "/me", name: props.account.account_name, image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f464.png"},
-            {to: "/logout", name: "Logout", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f44b.png"}
+            {to: "/", name: "Items", icon: <FaBurger/>},
+            {to: "/venues", name: "Venues", icon: <FaShop/>},
+            {to: "/me", name: props.account.account_name, icon: <FaUser/>},
+            {to: "/logout", name: "Logout", icon: <FaArrowRightFromBracket/>}
         ]
     }, [props.account]);
 
@@ -50,7 +52,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
                                 <MenuLink key={index} link={link}/>
                             )
                         })}
-                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", image: "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f511.png"}}/>}
+                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", icon: <FaKey/>}}/>}
                     </div>
                 </div>
             </div>
@@ -64,7 +66,10 @@ function MenuLink(props: { link: Link }) {
             className={({isActive}) => "block py-2 px-3 rounded " + (isActive ? "text-black bg-blue-200" : "text-gray-900 hover:bg-gray-100 [&>*]:grayscale")}
             to={props.link.to}
         >
-            <div className={"flex items-center"}><img className={"h-6 mr-3 "} src={props.link.image} alt={props.link.name}/> {props.link.name} </div>
+            <div className={"flex items-center space-x-3"}>
+                {props.link.icon}
+                <span>{props.link.name}</span>
+            </div>
         </NavLink>
     )
 }
