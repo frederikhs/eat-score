@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
+	"github.com/frederikhs/eat-score/email"
 	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -57,13 +58,13 @@ func LoginRequest(db *database.Database) func(c *gin.Context) {
 		link := fmt.Sprintf("%s/magic-login?magic_login_link_hash=%s", os.Getenv("WEB_BASE_URI"), hash)
 		fmt.Println(link)
 
-		//err = email.SendMail(db, link, account)
-		//if err != nil {
-		//	c.JSON(http.StatusInternalServerError, gin.H{
-		//		"message": fmt.Sprintf("something bad happened: %v", err),
-		//	})
-		//	return
-		//}
+		err = email.SendMail(link, account)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": fmt.Sprintf("something bad happened: %v", err),
+			})
+			return
+		}
 
 		err = db.Connection.Commit()
 		if err != nil {

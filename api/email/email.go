@@ -31,8 +31,8 @@ type Send struct {
 }
 
 func GenerateEmail(name string, link string) string {
-	var tmplFile = "templates/user-created.html.tpl"
-	tmpl, err := template.New("user-created.html.tpl").ParseFiles(tmplFile)
+	var tmplFile = "templates/magic-login-link.html.tpl"
+	tmpl, err := template.New("magic-login-link.html.tpl").ParseFiles(tmplFile)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +52,7 @@ func GenerateEmail(name string, link string) string {
 	return out.String()
 }
 
-func SendMail(db *database.Database, link string, account *database.Account) error {
+func SendMail(link string, account *database.Account) error {
 	htmlEmail := GenerateEmail(account.AccountName, link)
 
 	url := "https://api.smtp2go.com/v3/email/send"
@@ -60,8 +60,8 @@ func SendMail(db *database.Database, link string, account *database.Account) err
 	email := Send{
 		ApiKey:   os.Getenv("SMTP2GO_API_KEY"),
 		To:       []string{fmt.Sprintf("%s <%s>", account.AccountName, account.AccountEmail)},
-		Sender:   "robot <robot@hrgn.dk>",
-		Subject:  "Magic login",
+		Sender:   "Eat Score <robot@hrgn.dk>",
+		Subject:  "Magic login link",
 		HtmlBody: htmlEmail,
 	}
 
