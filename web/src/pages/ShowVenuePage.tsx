@@ -4,6 +4,7 @@ import ListVenue from "../components/Venue";
 import {useNavigate, useParams} from "react-router-dom";
 import ListItems from "../components/ListItems";
 import {useAccount} from "../Root";
+import CreateItem from "../components/CreateItem";
 
 export default function ShowVenuePage() {
     const {account} = useAccount()
@@ -48,6 +49,14 @@ export default function ShowVenuePage() {
         })
     }
 
+    const createItem = (item_id: number) => {
+        if (venue === null) {
+            return
+        }
+
+        navigate(`/venues/${venue.venue_id}/items/${item_id}`)
+    }
+
     if (venue === null) {
         return (
             <p>Loading</p>
@@ -58,13 +67,14 @@ export default function ShowVenuePage() {
         <div className={"space-y-10"}>
             <h1 className={"heading-default"}>Venue</h1>
             {canDeleteVenue &&
-                <button onClick={() => deleteExistingVenue()} className={"text-white font-bold py-2 px-4 rounded bg-red-700 hover:bg-red-600"}>
-                    Delete
+                <button onClick={() => window.confirm("Are you sure?") && deleteExistingVenue()} className={"text-white font-bold py-2 px-4 rounded bg-red-700 hover:bg-red-600"}>
+                    Delete Venue
                 </button>
             }
             <ListVenue venue={venue}/>
             <h1 className={"heading-default"}>Items</h1>
-            {items !== null && <ListItems items={items} show_venue={false}/>}
+
+            {items !== null && <ListItems items={items} show_venue={false} extra_row={<CreateItem venue_id={venue.venue_id} onSubmit={createItem} />}/>}
         </div>
     );
 }

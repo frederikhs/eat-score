@@ -236,6 +236,6 @@ func DeleteVenue(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, venue)
+		c.JSON(response.Message(http.StatusOK, "deleted venue"))
 	}
 }

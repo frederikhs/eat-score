@@ -14,7 +14,7 @@ export default function ListRatings(props: { item_ratings: ItemRating[] }) {
             <tbody>
             {props.item_ratings.map((item_rating, index) => {
                 return (
-                    <tr key={index} className={"even:bg-gray-50 odd:bg-white hover:opacity-80 hover:cursor-pointer hover:text-blue-500"}>
+                    <tr key={index} className={"even:bg-gray-50 odd:bg-white"}>
                         <td className="px-6 py-4">{item_rating.item_rating_account_name}</td>
                         <td className="px-6 py-4">
                             <ReactSlider

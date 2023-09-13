@@ -21,7 +21,6 @@ export default function Items() {
 
     return (
         <div>
-            <h1 className={"heading-default"}>Items</h1>
             <ListItems items={items} show_venue={true}/>
         </div>
     );

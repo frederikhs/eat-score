@@ -94,6 +94,14 @@ export const fetchAllItems = async (): Promise<ApiResponse> => {
     return await getJson(`${BASE_API_URI}/items`)
 }
 
+export const createItem = async (item_venue_id: number, item_name: string, item_price_dkk: number): Promise<ApiResponse> => {
+    return await postJson(`${BASE_API_URI}/venues/${item_venue_id}/items`, {item_name, item_price_dkk})
+}
+
+export const deleteItem = async (venue_id: number, item_id: number): Promise<ApiResponse> => {
+    return await deleteJson(`${BASE_API_URI}/venues/${venue_id}/items/${item_id}`)
+}
+
 export const fetchItemsByVenueId = async (venue_id: number): Promise<ApiResponse> => {
     return await getJson(`${BASE_API_URI}/venues/${venue_id}/items`)
 }

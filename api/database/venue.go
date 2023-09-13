@@ -61,5 +61,10 @@ func (db *Database) CreateVenue(venueName string, venueCreatedByAccountId int) e
 
 func (db *Database) DeleteVenueById(venueId int) error {
 	_, err := db.Connection.Exec("UPDATE eat_score.venue SET venue_deleted_at = NOW() WHERE venue_id = $1", venueId)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Connection.Exec("UPDATE eat_score.item SET item_deleted_at = NOW() WHERE item_venue_id = $1", venueId)
 	return err
 }

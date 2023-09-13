@@ -42,7 +42,8 @@ CREATE TABLE eat_score.item
     item_name                  VARCHAR                                       NOT NULL,
     item_price_dkk             INT                                           NOT NULL,
     item_created_at            TIMESTAMPTZ                                   NOT NULL DEFAULT NOW(),
-    item_created_by_account_id INT REFERENCES eat_score.account (account_id) NOT NULL
+    item_created_by_account_id INT REFERENCES eat_score.account (account_id) NOT NULL,
+    item_deleted_at            TIMESTAMPTZ
 );
 
 CREATE TABLE eat_score.item_rating
@@ -79,12 +80,14 @@ SELECT item_id,
        item_price_dkk,
        item_created_by_account_id,
        a.account_name                      as item_created_by_account_name,
+       item_created_at,
+       item_deleted_at,
        ROUND(AVG(ir.item_rating_value), 1) as avg_item_rating_value
 FROM eat_score.item
          JOIN eat_score.venue v on item.item_venue_id = v.venue_id
          LEFT JOIN eat_score.item_rating ir on item.item_id = ir.item_rating_item_id
          JOIN eat_score.account a on item.item_created_by_account_id = a.account_id
-GROUP BY 1, 2, 3, 4, 5, 6, 7, 8;
+GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 
 CREATE VIEW eat_score.view_venue_with_rating AS
 SELECT v.venue_id,
@@ -109,14 +112,19 @@ VALUES ('Killer Kebab', 1),
        ('Burger Shack', 1),
        ('Kebabery', 1),
        ('The Bagel Co', 1),
-       ('Gasolin Grill', 1);
+       ('Gasolin Grill', 1),
+       ('KantineBistro', 1);
 
 INSERT INTO eat_score.item (item_venue_id, item_name, item_price_dkk, item_created_by_account_id)
 VALUES (1, 'Killer Kombo Kebab', 139, 1),
        (1, 'Killer Kombo Falafel', 139, 1),
        (2, 'Shack Burger Menu', 79, 1),
        (3, 'Hjemmelavet Durum', 65, 1),
-       (4, 'Bagel', 75, 1);
+       (4, 'Bagel', 75, 1),
+       (6, 'Butter chicken', 0, 1),
+       (6, 'Hakke "boeuf"', 0, 1),
+       (6, 'Græsk farsbrød', 0, 1),
+       (6, 'Brændende kærlighed', 0, 1);
 
 INSERT INTO eat_score.item_rating (item_rating_item_id, item_rating_account_id, item_rating_value)
 VALUES (1, 1, 5),

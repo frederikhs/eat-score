@@ -13,7 +13,8 @@
 }
 
 .rating-thumb.active {
-    background-color: grey;
+    @apply bg-blue-600
+    /*background-color: grey;*/
 }
 
 .rating-mark {
