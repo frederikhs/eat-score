@@ -8,6 +8,7 @@ import (
 )
 
 func Register(r *gin.Engine, db *database.Database) {
+	r.GET("/healthz", controllers.HealthCheck())
 	r.POST("/logout", controllers.Logout())
 	r.POST("/login/request", controllers.LoginRequest(db))
 	r.POST("/login", controllers.LoginWithMagicLink(db))

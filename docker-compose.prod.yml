@@ -1,0 +1,13 @@
+services:
+  app:
+    image: registry.hrgn.dk/eat-score-api:${TAG:-prod}
+    build:
+      target: production
+      args:
+        VERSION: ${TAG:-prod}
+  web:
+    image: registry.hrgn.dk/eat-score-web:${TAG:-prod}
+    build:
+      target: production
+      args:
+        VERSION: ${TAG:-prod}

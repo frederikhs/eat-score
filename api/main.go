@@ -7,19 +7,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
+	"os"
 )
 
 func main() {
-	err := godotenv.Load(".env.development")
-	if err != nil {
-		panic(err)
+	switch os.Getenv("ENVIRONMENT") {
+	case "PRODUCTION":
+		_ = godotenv.Load(".env.production")
+	default:
+		_ = godotenv.Load(".env.development")
 	}
 
 	db := database.Connect()
 
 	r := gin.Default()
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{os.Getenv("WEB_BASE_URI")}
 	config.AllowCredentials = true
 	r.Use(cors.New(config))
 

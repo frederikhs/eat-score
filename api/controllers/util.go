@@ -60,3 +60,9 @@ func NotFound() gin.HandlerFunc {
 		c.JSON(response.Message(http.StatusNotFound, "empty in here"))
 	}
 }
+
+func HealthCheck() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.JSON(response.Message(http.StatusOK, "ok"))
+	}
+}

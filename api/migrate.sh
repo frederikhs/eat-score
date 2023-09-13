@@ -1,12 +1,14 @@
 set -e
 
+PATH="$PATH:/go/bin"
+
 # load production env if in production
-if [ "$ENVIRONMENT" == "production" ]; then
+if [ "$ENVIRONMENT" == "PRODUCTION" ]; then
     export $(cat .env.production | grep -v '#' | sed 's/\r$//' | awk '/=/ {print $1}' )
 fi
 
 # load development else
-if [ "$ENVIRONMENT" != "production" ]; then
+if [ "$ENVIRONMENT" != "PRODUCTION" ]; then
     export $(cat .env.development | grep -v '#' | sed 's/\r$//' | awk '/=/ {print $1}' )
 fi
 
