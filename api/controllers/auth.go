@@ -13,7 +13,7 @@ import (
 
 func Logout() func(c *gin.Context) {
 	return func(c *gin.Context) {
-		c.SetCookie("session_id", "", -1, "/", "localhost", false, true)
+		c.SetCookie("session_id", "", -1, "/", os.Getenv("WEB_BASE_URI"), os.Getenv("ENVIRONMENT") == "PRODUCTION", true)
 		c.JSON(response.Message(http.StatusOK, "you are now logged out"))
 	}
 }
