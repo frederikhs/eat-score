@@ -142,7 +142,7 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 			return
 		}
 
-		c.SetCookie("session_id", sessionId, 60*60*24*365, "/", "localhost", false, true)
+		c.SetCookie("session_id", sessionId, 60*60*24*365, "/", os.Getenv("WEB_BASE_URI"), os.Getenv("ENVIRONMENT") == "PRODUCTION", true)
 		c.JSON(response.Message(http.StatusCreated, fmt.Sprintf("hello account id: %d", account.AccountId)))
 	}
 }
