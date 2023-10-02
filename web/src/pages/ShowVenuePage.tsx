@@ -2,9 +2,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {deleteVenue, fetchItemsByVenueId, fetchVenueById, Item, Venue} from "../request";
 import ListVenue from "../components/Venue";
 import {useNavigate, useParams} from "react-router-dom";
-import ListItems from "../components/ListItems";
 import {useAccount} from "../Root";
 import CreateItem from "../components/CreateItem";
+import ListItems from "../components/ListItems";
 
 export default function ShowVenuePage() {
     const {account} = useAccount()
@@ -74,7 +74,7 @@ export default function ShowVenuePage() {
             <ListVenue venue={venue}/>
             <h1 className={"heading-default"}>Items</h1>
 
-            {items !== null && <ListItems items={items} show_venue={false} extra_row={<CreateItem venue_id={venue.venue_id} onSubmit={createItem} />}/>}
+            {items !== null && <ListItems items={items} show_venue={false} extra_row={<CreateItem venue_id={venue.venue_id} onSubmit={createItem}/>}/>}
         </div>
     );
 }

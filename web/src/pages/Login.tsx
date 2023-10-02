@@ -65,7 +65,7 @@ export default function Login() {
                             <button
                                 disabled={!canSubmit}
                                 onClick={() => submit()}
-                                className={"w-full text-white text-center font-bold py-2 px-4 rounded " + (canSubmit ? "bg-blue-700 hover:bg-blue-600" : "bg-blue-200 hover:cursor-not-allowed")}
+                                className={"w-full text-white text-center font-bold py-2 px-4 rounded " + (canSubmit ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 hover:cursor-not-allowed")}
                             >
                                 {loading &&
                                     <span className={"flex justify-center"}><FaSpinner className={"animate-spin text-2xl flex justify-center"}/></span>}

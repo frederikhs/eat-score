@@ -23,11 +23,11 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
                 max={10}
                 value={rating}
                 onChange={(value) => setRating(value)}
-                thumbClassName="text-center bg-blue-600 text-white rounded border-[5px] border-transparent rating-thumb hover:cursor-pointer"
+                thumbClassName="text-center bg-mango-600 text-white rounded border-[5px] border-transparent rating-thumb hover:cursor-pointer"
                 trackClassName="rating-track bg-gray-300 relative"
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
             />
-            <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-blue-700"}>
+            <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-mango-600"}>
                 <div className={"flex items-center justify-center space-x-3"}>
                     <span>Rate</span>
                     <FaPlus />

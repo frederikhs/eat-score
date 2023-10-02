@@ -15,6 +15,7 @@ type Item struct {
 	ItemDeletedAt            *time.Time `db:"item_deleted_at" json:"item_deleted_at"`
 
 	AvgItemRatingValue *float64 `db:"avg_item_rating_value" json:"avg_item_rating_value"`
+	ItemRatingCount    int      `db:"item_rating_count" json:"item_rating_count"`
 }
 
 func (db *Database) GetItems() ([]Item, error) {

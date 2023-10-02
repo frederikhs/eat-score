@@ -87,7 +87,9 @@ export interface Item {
     item_price_dkk: number
     item_created_by_account_id: number
     item_created_by_account_name: string
+    item_created_at: string
     avg_item_rating_value: number | null
+    item_rating_count: number
 }
 
 export const fetchAllItems = async (): Promise<ApiResponse> => {

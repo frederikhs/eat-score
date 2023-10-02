@@ -2,10 +2,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {deleteItem, fetchItemByVenueIdAndItemId, fetchItemRatingsByVenueIdAndItemId, fetchVenueById, Item, ItemRating, Venue} from "../request";
 import ListVenue from "../components/Venue";
 import {useNavigate, useParams} from "react-router-dom";
-import ListItems from "../components/ListItems";
 import ListRatings from "../components/ListRatings";
 import Rate from "../components/Rate";
 import {useAccount} from "../Root";
+import ListItems from "../components/ListItems";
 
 export default function ShowItemPage() {
     const {account} = useAccount()

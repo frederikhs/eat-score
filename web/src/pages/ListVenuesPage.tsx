@@ -58,7 +58,7 @@ export default function ListVenuesPage() {
                     <button
                         disabled={!canCreateNewVenue}
                         onClick={() => createNewVenue()}
-                        className={"flex-none text-white font-bold py-2 px-4 rounded " + (canCreateNewVenue ? "bg-blue-700 hover:bg-blue-600" : "bg-blue-200 hover:cursor-not-allowed")}
+                        className={"flex-none text-white font-bold py-2 px-4 rounded " + (canCreateNewVenue ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 hover:cursor-not-allowed")}
                     >Create new Venue
                     </button>
                 </div>

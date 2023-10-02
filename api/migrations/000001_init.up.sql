@@ -82,7 +82,8 @@ SELECT item_id,
        a.account_name                      as item_created_by_account_name,
        item_created_at,
        item_deleted_at,
-       ROUND(AVG(ir.item_rating_value), 1) as avg_item_rating_value
+       ROUND(AVG(ir.item_rating_value), 1) as avg_item_rating_value,
+       COUNT(ir.item_rating_value) as item_rating_count
 FROM eat_score.item
          JOIN eat_score.venue v on item.item_venue_id = v.venue_id
          LEFT JOIN eat_score.item_rating ir on item.item_id = ir.item_rating_item_id
