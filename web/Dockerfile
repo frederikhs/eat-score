@@ -2,7 +2,7 @@ FROM node:alpine as development
 WORKDIR /web
 RUN chown node:node .
 USER node
-CMD ["npm", "run", "start"]
+CMD npm install && npm run start
 
 FROM node:alpine as intermediate
 WORKDIR /web
