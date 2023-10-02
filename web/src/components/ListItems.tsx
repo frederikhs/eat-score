@@ -9,7 +9,7 @@ export default function ListItems(props: { items: Item[], show_venue: boolean, e
     return (
         <div className={"space-y-4"}>
             {props.extra_row}
-            <div className={"grid sm:grid-cols-3 gap-4"}>
+            <div className={"grid sm:grid-cols-3 gap-3"}>
                 {props.items.map((item, index) => {
                     return <DisplayItem key={index} item={item}/>
                 })}
@@ -20,10 +20,10 @@ export default function ListItems(props: { items: Item[], show_venue: boolean, e
 
 function DisplayItem(props: { item: Item }) {
     return (
-        <div className="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow">
             <div className={"mb-2"}>
                 <Link to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}>
-                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white hover:underline">{props.item.item_name}</h5>
+                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 hover:underline">{props.item.item_name}</h5>
                 </Link>
                 <Link to={`/venues/${props.item.venue_id}`}>
                     <p className={"hover:underline"}>{props.item.venue_name}</p>

@@ -11,15 +11,15 @@
 }
 
 .badge-blue {
-    @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+    @apply bg-blue-100 text-blue-800
 }
 
 .badge-gray {
-    @apply bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300
+    @apply bg-gray-100 text-gray-800
 }
 
 .badge-mango {
-    @apply bg-mango-100 text-mango-800 dark:bg-mango-900 dark:text-mango-300
+    @apply bg-mango-100 text-mango-800
 }
 
 .vertical-slider {
