@@ -1,7 +1,6 @@
 services:
   db:
-    build:
-      context: db
+    image: eat-score-db-with-data
     ports:
       - "5432:5432"
     stop_grace_period: 1s

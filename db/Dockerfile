@@ -1,11 +1,9 @@
-FROM postgres:alpine
+ARG HOST="192.168.1.231"
+ARG USER="hrgn"
+ARG DATABASE_NAME="eat_score"
+ARG PRE_FILE="pre.sql"
+ARG POST_FILE="post.sql"
+ARG LOCALE_LANG="en_DK"
+ARG TZ="Europe/Copenhagen"
 
-# Change default data location for use with commiting the image. Default use if volume, and thus NOT part of the image. This changes the data to be part of the image if commited
-RUN mkdir -p /var/lib/postgresql-static/data
-ENV PGDATA /var/lib/postgresql-static/data
-
-# Settings
-ENV POSTGRES_USER "eat_score"
-ENV POSTGRES_PASSWORD "eat_score"
-ENV POSTGRES_DB "eat_score"
-ENV TZ "Europe/Copenhagen"
+FROM ghcr.io/frederikhs/local-db-copy:latest

@@ -1,0 +1,2 @@
+CREATE ROLE eat_score LOGIN SUPERUSER PASSWORD 'eat_score';
+CREATE DATABASE eat_score OWNER eat_score ENCODING 'UTF-8' TEMPLATE template0;
