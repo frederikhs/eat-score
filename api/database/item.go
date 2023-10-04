@@ -14,8 +14,11 @@ type Item struct {
 	ItemCreatedAt            time.Time  `db:"item_created_at" json:"item_created_at"`
 	ItemDeletedAt            *time.Time `db:"item_deleted_at" json:"item_deleted_at"`
 
-	AvgItemRatingValue *float64 `db:"avg_item_rating_value" json:"avg_item_rating_value"`
-	ItemRatingCount    int      `db:"item_rating_count" json:"item_rating_count"`
+	AvgItemRatingValue               *float64 `db:"avg_item_rating_value" json:"avg_item_rating_value"`
+	ItemRatingCount                  int      `db:"item_rating_count" json:"item_rating_count"`
+	MinItemRatingValue               *int     `db:"min_item_rating_value" json:"min_item_rating_value"`
+	MaxItemRatingValue               *int     `db:"max_item_rating_value" json:"max_item_rating_value"`
+	StandardDeviationItemRatingValue *float64 `db:"standard_deviation_item_rating_value" json:"standard_deviation_item_rating_value"`
 }
 
 func (db *Database) GetItems() ([]Item, error) {

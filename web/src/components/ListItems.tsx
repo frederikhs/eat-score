@@ -1,9 +1,10 @@
 import {Item} from "../request";
 import React, {useMemo} from "react";
 import {Link} from "react-router-dom";
-import {FaArrowRight, FaClock, FaUsers} from "react-icons/fa";
+import {FaArrowDown, FaArrowRight, FaArrowUp, FaClock, FaUsers} from "react-icons/fa";
 import Moment from "react-moment";
 import ReactSlider from "react-slider";
+import {FaArrowsUpDown} from "react-icons/fa6";
 
 export default function ListItems(props: { items: Item[], show_venue: boolean, extra_row?: React.ReactNode }) {
     return (
@@ -59,27 +60,38 @@ function DisplayItem(props: { item: Item }) {
                         to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}
                         className={"text-white text-center font-bold flex items-center space-x-1 py-2 px-4 rounded bg-mango-600 hover:bg-mango-700"}
                     >
-                        <span>Rate</span><FaArrowRight />
+                        <span>Rate</span><FaArrowRight/>
                     </Link>
                 </div>
             </div>
 
             <div className={"flex justify-between items-center"}>
                 <div className={"flex flex-wrap"}>
-                    <div className={"flex"}>
-                            <span className={"badge badge-gray flex items-center space-x-1"}>
-                                <FaClock/>
-                                <span>Created <Moment date={props.item.item_created_at} fromNow/></span>
-                            </span>
-                    </div>
-                    <div className={"flex"}>
-                            <span className={"badge badge-gray flex items-center space-x-1"}>
-                                <FaUsers/>
-                                <span>{props.item.item_rating_count} rating{props.item.item_rating_count > 1 ? 's' : ''}</span>
-                            </span>
-                    </div>
+                    <InfoBadge icon={<FaClock/>} title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>}/>
+                    <InfoBadge icon={<FaUsers/>} title={`${props.item.item_rating_count} rating${props.item.item_rating_count !== 1 ? 's' : ''}`}/>
+                    {props.item.max_item_rating_value !== null &&
+                        <InfoBadge icon={<FaArrowUp/>} title={props.item.max_item_rating_value} description={"Lowest rating"}/>}
+                    {props.item.min_item_rating_value !== null &&
+                        <InfoBadge icon={<FaArrowDown/>} title={props.item.min_item_rating_value} description={"Highest rating"}/>}
+                    {props.item.standard_deviation_item_rating_value !== null && <InfoBadge
+                        icon={<FaArrowsUpDown/>}
+                        title={props.item.standard_deviation_item_rating_value}
+                        description={"Standard deviation"}
+                    />}
                 </div>
             </div>
+        </div>
+    )
+}
+
+function InfoBadge(props: { icon: React.ReactNode, title: React.ReactNode, description?: string }) {
+    return (
+        <div className={"flex"}>
+            <span className={"badge group badge-gray flex items-center space-x-1"}>
+                {props.icon}
+                <span>{props.title}</span>
+                {props.description && <span className={"hidden group-hover:block"}>({props.description})</span>}
+            </span>
         </div>
     )
 }

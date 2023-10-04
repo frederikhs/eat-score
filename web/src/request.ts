@@ -90,6 +90,9 @@ export interface Item {
     item_created_at: string
     avg_item_rating_value: number | null
     item_rating_count: number
+    min_item_rating_value: number | null
+    max_item_rating_value: number | null
+    standard_deviation_item_rating_value: number | null
 }
 
 export const fetchAllItems = async (): Promise<ApiResponse> => {
