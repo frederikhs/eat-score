@@ -83,7 +83,7 @@ export default function ShowItemPage() {
             {venue !== null && item !== null && <Rate venue_id={venue.venue_id} item_id={item.item_id} onSubmit={() => fetchAll()}/>}
 
             <h1 className={"heading-default"}>Account ratings</h1>
-            {itemRatings !== null && <ListRatings item_ratings={itemRatings}/>}
+            {itemRatings !== null && item?.has_rated_item && <ListRatings item_ratings={itemRatings}/>}
         </div>
     );
 }

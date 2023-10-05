@@ -19,11 +19,34 @@ type Item struct {
 	MinItemRatingValue               *int     `db:"min_item_rating_value" json:"min_item_rating_value"`
 	MaxItemRatingValue               *int     `db:"max_item_rating_value" json:"max_item_rating_value"`
 	StandardDeviationItemRatingValue *float64 `db:"standard_deviation_item_rating_value" json:"standard_deviation_item_rating_value"`
+	HasRatedItem                     bool     `db:"has_rated_item" json:"has_rated_item"`
 }
 
-func (db *Database) GetItems() ([]Item, error) {
+const ItemsSelect = `SELECT item.item_id,
+		item.venue_id,
+		item.venue_name,
+		item.venue_deleted_at,
+		item.item_name,
+		item.item_price_dkk,
+		item.item_created_by_account_id,
+		item.item_created_by_account_name,
+		item.item_created_at,
+		item.item_deleted_at,
+		item.avg_item_rating_value,
+		item.item_rating_count,
+		item.min_item_rating_value,
+		item.max_item_rating_value,
+		item.standard_deviation_item_rating_value,
+		CASE
+	WHEN EXISTS(SELECT ir.item_rating_item_id
+	FROM eat_score.item_rating ir
+	WHERE ir.item_rating_item_id = item.item_id AND ir.item_rating_account_id = $1) THEN True
+	ELSE false END as has_rated_item
+	FROM eat_score.view_item_with_rating item`
+
+func (db *Database) GetItems(accountId int) ([]Item, error) {
 	var items []Item
-	err := db.Connection.Select(&items, "SELECT * FROM eat_score.view_item_with_rating WHERE item_deleted_at IS NULL ORDER BY item_created_at DESC")
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL ORDER BY item_created_at DESC", accountId)
 	if err != nil {
 		return nil, err
 	}
@@ -35,9 +58,9 @@ func (db *Database) GetItems() ([]Item, error) {
 	return items, nil
 }
 
-func (db *Database) GetItemsByVenueId(venueId int) ([]Item, error) {
+func (db *Database) GetItemsByVenueId(accountId int, venueId int) ([]Item, error) {
 	var items []Item
-	err := db.Connection.Select(&items, "SELECT * FROM eat_score.view_item_with_rating WHERE item_deleted_at IS NULL AND venue_id = $1", venueId)
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND venue_id = $2", accountId, venueId)
 	if err != nil {
 		return nil, err
 	}
@@ -49,9 +72,9 @@ func (db *Database) GetItemsByVenueId(venueId int) ([]Item, error) {
 	return items, nil
 }
 
-func (db *Database) GetItemById(itemId int) (*Item, error) {
+func (db *Database) GetItemById(accountId int, itemId int) (*Item, error) {
 	var items []Item
-	err := db.Connection.Select(&items, "SELECT * FROM eat_score.view_item_with_rating WHERE item_deleted_at IS NULL AND item_id = $1", itemId)
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND item_id = $2", accountId, itemId)
 	if err != nil {
 		return nil, err
 	}
@@ -63,9 +86,9 @@ func (db *Database) GetItemById(itemId int) (*Item, error) {
 	return &items[0], nil
 }
 
-func (db *Database) GetItemByNameAndVenueId(itemName string, venueId int) (*Item, error) {
+func (db *Database) GetItemByNameAndVenueId(accountId int, itemName string, venueId int) (*Item, error) {
 	var items []Item
-	err := db.Connection.Select(&items, "SELECT * FROM eat_score.view_item_with_rating WHERE item_deleted_at IS NULL AND item_name = $1 AND venue_id = $2", itemName, venueId)
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND item_name = $2 AND venue_id = $3", accountId, itemName, venueId)
 	if err != nil {
 		return nil, err
 	}

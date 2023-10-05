@@ -50,7 +50,8 @@ func GetVenueItemsByVenueId(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
-		items, err := db.GetItemsByVenueId(venue.VenueId)
+		authedContext := middleware.MustGetAuthedContext(c)
+		items, err := db.GetItemsByVenueId(authedContext.Account.AccountId, venue.VenueId)
 		if err != nil {
 			c.JSON(response.Error(err))
 			return

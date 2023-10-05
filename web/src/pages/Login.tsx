@@ -47,7 +47,7 @@ export default function Login() {
             <Navigation authed={false}/>
             <Frame
                 content={
-                    <div className={"flex justify-center align-items"}>
+                    <div className={"flex justify-center align-items dark:text-white"}>
                         {!hasCheckedLogin && <p className={"text-center"}>Loading</p>}
 
                         {hasCheckedLogin && !hasSentMail && <div>
@@ -57,7 +57,7 @@ export default function Login() {
                                 name={"email"}
                                 placeholder={"john@appleseed.com"}
                                 onChange={e => setEmail(e.target.value)}
-                                className="text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                className="text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
                                 type="text"
                             />
 
@@ -65,7 +65,7 @@ export default function Login() {
                             <button
                                 disabled={!canSubmit}
                                 onClick={() => submit()}
-                                className={"w-full text-white text-center font-bold py-2 px-4 rounded " + (canSubmit ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 hover:cursor-not-allowed")}
+                                className={"w-full text-white text-center font-bold py-2 px-4 rounded " + (canSubmit ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 dark:bg-gray-400 hover:cursor-not-allowed")}
                             >
                                 {loading &&
                                     <span className={"flex justify-center"}><FaSpinner className={"animate-spin text-2xl flex justify-center"}/></span>}

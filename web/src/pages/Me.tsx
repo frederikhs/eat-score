@@ -9,7 +9,7 @@ export default function Me() {
     }
 
     return (
-        <div className={"flex justify-center"}>
+        <div className={"flex justify-center dark:text-white"}>
             <div className={"text-center"}>
                 <h1 className={"heading-default"}>Hello {account.account_name}</h1>
                 <p>{"<"}{account.account_email}{">"}</p>

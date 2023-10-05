@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .heading-default {
-    @apply mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900
+    @apply mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white
 }
 
 .badge {
@@ -15,7 +15,7 @@
 }
 
 .badge-gray {
-    @apply bg-gray-100 text-gray-800
+    @apply bg-gray-100 text-gray-800 dark:bg-neutral-600 dark:text-white
 }
 
 .badge-mango {

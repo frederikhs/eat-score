@@ -9,13 +9,13 @@ SELECT item_id,
        item_name,
        item_price_dkk,
        item_created_by_account_id,
-       a.account_name                      as item_created_by_account_name,
+       a.account_name                         as item_created_by_account_name,
        item_created_at,
        item_deleted_at,
-       ROUND(AVG(ir.item_rating_value), 1) as avg_item_rating_value,
-       COUNT(ir.item_rating_value) as item_rating_count,
-       MIN(ir.item_rating_value) as min_item_rating_value,
-       MAX(ir.item_rating_value) as max_item_rating_value,
+       ROUND(AVG(ir.item_rating_value), 1)    as avg_item_rating_value,
+       COUNT(ir.item_rating_value)            as item_rating_count,
+       MIN(ir.item_rating_value)              as min_item_rating_value,
+       MAX(ir.item_rating_value)              as max_item_rating_value,
        ROUND(STDDEV(ir.item_rating_value), 1) AS standard_deviation_item_rating_value
 FROM eat_score.item
          JOIN eat_score.venue v on item.item_venue_id = v.venue_id

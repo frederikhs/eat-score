@@ -10,7 +10,9 @@ import (
 
 func GetAllItems(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		items, err := db.GetItems()
+		authedContext := middleware.MustGetAuthedContext(c)
+
+		items, err := db.GetItems(authedContext.Account.AccountId)
 		if err != nil {
 			c.JSON(response.Error(err))
 			return
@@ -47,7 +49,7 @@ func CreateItem(db *database.Database) gin.HandlerFunc {
 
 		authedContext := middleware.MustGetAuthedContext(c)
 
-		existingItem, err := db.GetItemByNameAndVenueId(item.ItemName, venue.VenueId)
+		existingItem, err := db.GetItemByNameAndVenueId(authedContext.Account.AccountId, item.ItemName, venue.VenueId)
 		if err != nil {
 			c.JSON(response.Error(err))
 			return
@@ -82,7 +84,7 @@ func CreateItem(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
-		newItem, err := db.GetItemById(itemId)
+		newItem, err := db.GetItemById(authedContext.Account.AccountId, itemId)
 		if err != nil {
 			c.JSON(response.Error(err))
 			return

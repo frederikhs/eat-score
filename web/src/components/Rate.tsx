@@ -24,7 +24,7 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
                 value={rating}
                 onChange={(value) => setRating(value)}
                 thumbClassName="text-center bg-mango-600 text-white rounded border-[5px] border-transparent rating-thumb hover:cursor-pointer"
-                trackClassName="rating-track bg-gray-300 relative"
+                trackClassName="rating-track bg-gray-300 dark:bg-neutral-600 relative"
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
             />
             <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-mango-600"}>

@@ -44,7 +44,7 @@ export default function ListVenuesPage() {
     return (
         <div>
             <h1 className={"heading-default"}>Venues</h1>
-            <div className="rounded overflow-hidden shadow-md mb-4">
+            <div className="rounded overflow-hidden shadow-md mb-4 dark:bg-neutral-800">
                 <div className="px-6 py-4 space-x-4 flex">
                     <input
                         value={venueName}
@@ -52,7 +52,7 @@ export default function ListVenuesPage() {
                         placeholder={"The Burger Shop"}
                         autoComplete={"off"}
                         onChange={e => setVenueName(e.target.value)}
-                        className="text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
                         type="text"
                     />
                     <button

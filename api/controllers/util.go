@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
+	"github.com/frederikhs/eat-score/middleware"
 	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -43,7 +44,8 @@ func GetVenueItemByRouteParams(db *database.Database, c *gin.Context) (*database
 		return nil, nil, fmt.Errorf("could not parse item_id: %v", ErrCouldNotParseInt)
 	}
 
-	item, err := db.GetItemById(itemId)
+	authedContext := middleware.MustGetAuthedContext(c)
+	item, err := db.GetItemById(authedContext.Account.AccountId, itemId)
 	if err != nil {
 		return nil, nil, err
 	}

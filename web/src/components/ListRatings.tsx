@@ -4,8 +4,8 @@ import React from "react";
 
 export default function ListRatings(props: { item_ratings: ItemRating[] }) {
     return (
-        <table className="w-full text-left ">
-            <thead className="uppercase bg-gray-50">
+        <table className="w-full text-left dark:text-white">
+            <thead className="uppercase bg-gray-50 dark:bg-neutral-800">
             <tr>
                 <th scope="col" className="px-6 py-3">Account Name</th>
                 <th scope="col" className="px-6 py-3">Rating</th>
@@ -14,7 +14,7 @@ export default function ListRatings(props: { item_ratings: ItemRating[] }) {
             <tbody>
             {props.item_ratings.map((item_rating, index) => {
                 return (
-                    <tr key={index} className={"even:bg-gray-50 odd:bg-white"}>
+                    <tr key={index} className={"even:bg-gray-50 dark:even:bg-neutral-800 odd:bg-white dark:odd:bg-neutral-700"}>
                         <td className="px-6 py-4">{item_rating.item_rating_account_name}</td>
                         <td className="px-6 py-4">
                             <ReactSlider
@@ -26,7 +26,7 @@ export default function ListRatings(props: { item_ratings: ItemRating[] }) {
                                 value={item_rating.item_rating_value}
                                 disabled={true}
                                 thumbClassName="text-center bg-gray-500 text-white rounded border-[5px] border-transparent rating-thumb"
-                                trackClassName="rating-track bg-gray-300 relative"
+                                trackClassName="rating-track bg-gray-300 dark:bg-neutral-600 relative"
                                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
                             />
                         </td>

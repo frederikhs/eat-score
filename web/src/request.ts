@@ -93,6 +93,7 @@ export interface Item {
     min_item_rating_value: number | null
     max_item_rating_value: number | null
     standard_deviation_item_rating_value: number | null
+    has_rated_item: boolean
 }
 
 export const fetchAllItems = async (): Promise<ApiResponse> => {
