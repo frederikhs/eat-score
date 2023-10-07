@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FaMoon, FaSun} from "react-icons/fa";
 
 export default function ThemeSwitcher() {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(localStorage.darkMode === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches));
 
     useEffect(() => {
         if (localStorage.darkMode === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
