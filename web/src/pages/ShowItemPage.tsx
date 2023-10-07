@@ -15,16 +15,6 @@ export default function ShowItemPage() {
     const [item, setItem] = useState<Item | null>(null);
     const [itemRatings, setItemRatings] = useState<ItemRating[] | null>(null);
 
-    useEffect(() => {
-        fetchAll()
-    }, [])
-
-    const fetchAll = () => {
-        fetchItem()
-        fetchRatings()
-        fetchVenue()
-    }
-
     const fetchVenue = () => {
         fetchVenueById(venue_id as unknown as number).then((r) => {
             setVenue(r.response)
@@ -42,6 +32,17 @@ export default function ShowItemPage() {
             setItemRatings(r.response)
         })
     }
+
+    const fetchAll = () => {
+        fetchVenue()
+        fetchItem()
+        fetchRatings()
+    }
+
+    useEffect(() => {
+        fetchAll()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const canDeleteItem = useMemo(() => {
         if (item === null || account === undefined) {

@@ -22,7 +22,7 @@ export default function Login() {
 
             setHasCheckedLogin(true)
         })
-    }, [])
+    }, [navigate])
 
     const submit = () => {
         setLoading(true)
@@ -60,7 +60,6 @@ export default function Login() {
                                 className="text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
                                 type="text"
                             />
-
 
                             <button
                                 disabled={!canSubmit}

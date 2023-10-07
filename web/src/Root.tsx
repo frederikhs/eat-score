@@ -24,7 +24,7 @@ export default function Root() {
                 setAccount(r.response)
             }
         })
-    }, [])
+    }, [navigate])
 
     return (
         <div>

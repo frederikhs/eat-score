@@ -33,7 +33,7 @@ function DisplayItem(props: { item: Item }) {
         }
 
         return 5;
-    }, [props.item])
+    }, [hasRating, props.item])
 
     return (
         <div className="p-6 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-600 rounded-lg shadow">

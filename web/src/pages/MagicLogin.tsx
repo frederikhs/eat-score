@@ -20,7 +20,7 @@ export default function MagicLogin() {
                 setLoginErrorReason(r.response.message)
             }
         })
-    }, [])
+    }, [magicLoginLinkHash, navigate])
 
     return (
         <div>

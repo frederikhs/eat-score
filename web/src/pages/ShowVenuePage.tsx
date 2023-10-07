@@ -21,13 +21,13 @@ export default function ShowVenuePage() {
                 setVenue(r.response)
             }
         })
-    }, [])
+    }, [navigate, venue_id])
 
     useEffect(() => {
         fetchItemsByVenueId(venue_id as unknown as number).then((r) => {
             setItems(r.response)
         })
-    }, [])
+    }, [venue_id])
 
     const canDeleteVenue = useMemo(() => {
         if (venue === null || account === undefined) {
