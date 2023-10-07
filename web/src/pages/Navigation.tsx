@@ -2,8 +2,9 @@ import knife_fork_plate from "../assets/knife_fork_plate.png";
 import React, {useMemo} from "react";
 import {NavLink} from "react-router-dom";
 import {Account} from "../request";
-import {FaArrowRightFromBracket, FaBurger, FaShop} from "react-icons/fa6";
+import {FaBurger, FaShop} from "react-icons/fa6";
 import {FaKey, FaUser} from "react-icons/fa";
+import {firstWord} from "../util";
 
 interface Link {
     to: string
@@ -20,8 +21,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
         return [
             {to: "/", name: "Items", icon: <FaBurger/>},
             {to: "/venues", name: "Venues", icon: <FaShop/>},
-            {to: "/me", name: props.account.account_name, icon: <FaUser/>},
-            {to: "/logout", name: "Logout", icon: <FaArrowRightFromBracket/>}
+            {to: "/me", name: firstWord(props.account.account_name), icon: <FaUser/>},
         ]
     }, [props.account]);
 
