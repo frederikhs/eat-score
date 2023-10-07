@@ -26,7 +26,7 @@ export default function CreateItem(props: { venue_id: number, onSubmit: (item_id
                 placeholder={"Durum Menu"}
                 autoComplete={"off"}
                 onChange={e => setItemName(e.target.value)}
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
                 type="text"
             />
             <input
@@ -35,13 +35,13 @@ export default function CreateItem(props: { venue_id: number, onSubmit: (item_id
                 placeholder={"75"}
                 autoComplete={"off"}
                 onChange={e => setItemPriceDKK(e.target.value)}
-                className="appearance-none border rounded w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
                 type="number"
             />
             <button
                 disabled={!canSubmit}
                 onClick={() => submit()}
-                className={"w-full text-white font-bold py-2 px-4 rounded " + (canSubmit ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 hover:cursor-not-allowed")}
+                className={"w-full text-white font-bold py-2 px-4 rounded " + (canSubmit ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 dark:bg-neutral-500 hover:cursor-not-allowed")}
             >
                 <div className={"flex items-center justify-center space-x-3"}>
                     <span>Create item</span>
