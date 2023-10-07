@@ -26,7 +26,7 @@ func (db *Database) GetAccountById(id int) (*Account, error) {
 
 func (db *Database) GetAccountByEmail(email string) (*Account, error) {
 	var accounts []Account
-	err := db.Connection.Select(&accounts, "SELECT * FROM eat_score.account WHERE account.account_email = $1", email)
+	err := db.Connection.Select(&accounts, "SELECT * FROM eat_score.account WHERE lower(account.account_email) = lower($1)", email)
 	if err != nil {
 		return nil, err
 	}
