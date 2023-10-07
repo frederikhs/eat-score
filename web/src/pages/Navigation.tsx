@@ -51,7 +51,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
 function MenuLink(props: { link: Link }) {
     return (
         <NavLink
-            className={({isActive}) => "block py-2 px-3 rounded " + (isActive ? "bg-mango-600 text-white" : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-500 [&>*]:grayscale")}
+            className={({isActive}) => "block py-2 px-3 rounded " + (isActive ? "bg-mango-600 text-white" : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-500")}
             to={props.link.to}
         >
             <div className={"flex items-center space-x-3"}>
