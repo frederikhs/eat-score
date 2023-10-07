@@ -58,7 +58,6 @@ export default function ListRatings(props: { item_ratings: ItemRating[], account
                                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
                             />
                         </td>
-
                     </tr>
                 )
             })}

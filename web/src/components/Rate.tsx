@@ -15,7 +15,7 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
     }
 
     return (
-        <div className={"flex space-x-6"}>
+        <div className={"flex items-center space-x-6"}>
             <ReactSlider
                 className="h-[50px] horizontal-slider flex-grow"
                 markClassName="rating-mark h-[48px] w-[50px]"
@@ -27,12 +27,14 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
                 trackClassName="rating-track bg-gray-300 dark:bg-neutral-600 relative hover:cursor-pointer"
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
             />
-            <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-mango-600"}>
-                <div className={"flex items-center justify-center space-x-3"}>
-                    <span>Rate</span>
-                    <FaPlus/>
-                </div>
-            </button>
+            <div>
+                <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-mango-600 hover:bg-mango-700"}>
+                    <div className={"flex items-center justify-center space-x-3"}>
+                        <span>Rate</span>
+                        <FaPlus/>
+                    </div>
+                </button>
+            </div>
         </div>
     )
 }
