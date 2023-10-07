@@ -28,9 +28,11 @@ export default function ListRatings(props: { item_ratings: ItemRating[], account
                 return (
                     <tr key={index} className={"even:bg-gray-50 dark:even:bg-neutral-800 odd:bg-white dark:odd:bg-neutral-700"}>
                         <td className="px-6 py-4">
-                            <div className={"flex space-x-2"}>
+                            <div className={"flex items-center space-x-2"}>
                                 <span>{item_rating.item_rating_account_name}</span>
-                                <InfoBadge icon={<FaClock/>} title={<span><Moment date={item_rating.item_rating_created_at} fromNow/></span>} hide={false}/>
+                                <span className={"hidden sm:block"}>
+                                    <InfoBadge icon={<FaClock/>} title={<span><Moment date={item_rating.item_rating_created_at} fromNow/></span>} hide={false}/>
+                                </span>
                             </div>
                         </td>
                         <td>

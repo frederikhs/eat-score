@@ -62,7 +62,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                         max={10}
                         value={rating}
                         disabled={true}
-                        thumbClassName={"text-center text-white rounded border-[5px] border-transparent rating-thumb " + (hasRating ? 'bg-gray-400' : 'bg-mango-600')}
+                        thumbClassName={"text-center text-white rounded border-[5px] border-transparent rating-thumb " + (hasRating ? 'bg-gray-500' : 'bg-mango-600')}
                         trackClassName="rating-track bg-gray-200 dark:bg-neutral-600 relative"
                         renderThumb={(props, state) => <div {...props}>{hasRating ? state.valueNow : <FaQuestion className={"h-8"} />}</div>}
                     />
