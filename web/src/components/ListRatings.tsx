@@ -1,9 +1,9 @@
 import {createItemRating, ItemRating} from "../request";
-import ReactSlider from "react-slider";
 import React from "react";
 import Moment from "react-moment";
 import InfoBadge from "./InfoBadge";
 import {FaClock} from "react-icons/fa";
+import RateSlider from "./RateSlider";
 
 export default function ListRatings(props: { item_ratings: ItemRating[], account_id: number, onDelete: () => void }) {
     const deleteItemRating = (itemRating: ItemRating) => {
@@ -16,22 +16,26 @@ export default function ListRatings(props: { item_ratings: ItemRating[], account
 
     return (
         <table className="w-full text-left dark:text-white table-fixed">
-            <thead className="uppercase bg-gray-50 dark:bg-neutral-800">
+            <thead className="uppercase bg-gray-100 dark:bg-neutral-700">
             <tr>
-                <th scope="col" className="px-6 py-3">Name</th>
-                <th scope="col" className="px-6 py-3"></th>
-                <th scope="col" className="px-6 py-3">Rating</th>
+                <th scope="col" className="px-3 py-2">Name</th>
+                <th scope="col" className="px-3 py-2"></th>
+                <th scope="col" className="px-3 py-2">Rating</th>
             </tr>
             </thead>
             <tbody>
             {props.item_ratings.map((item_rating, index) => {
                 return (
-                    <tr key={index} className={"even:bg-gray-50 dark:even:bg-neutral-800 odd:bg-white dark:odd:bg-neutral-700"}>
-                        <td className="px-6 py-4">
+                    <tr key={index} className={"even:bg-gray-100 dark:odd:bg-neutral-800 odd:bg-white dark:even:bg-neutral-700"}>
+                        <td className="px-3 py-2">
                             <div className={"flex items-center space-x-2"}>
                                 <span>{item_rating.item_rating_account_name}</span>
                                 <span className={"hidden sm:block"}>
-                                    <InfoBadge icon={<FaClock/>} title={<span><Moment date={item_rating.item_rating_created_at} fromNow/></span>} hide={false}/>
+                                    <InfoBadge
+                                        icon={<FaClock/>}
+                                        title={<span><Moment date={item_rating.item_rating_created_at} fromNow/></span>}
+                                        hide={false}
+                                    />
                                 </span>
                             </div>
                         </td>
@@ -45,18 +49,8 @@ export default function ListRatings(props: { item_ratings: ItemRating[], account
                                 </button>
                             )}
                         </td>
-                        <td className="px-6 py-4 flex">
-                            <ReactSlider
-                                className="w-full h-[50px] horizontal-slider"
-                                markClassName="rating-mark h-[48px] w-[50px]"
-                                min={0}
-                                max={10}
-                                value={item_rating.item_rating_value}
-                                disabled={true}
-                                thumbClassName="text-center bg-gray-500 text-white rounded border-[5px] border-transparent rating-thumb"
-                                trackClassName="rating-track bg-gray-300 dark:bg-neutral-600 relative"
-                                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                            />
+                        <td className="px-3 py-2">
+                            <RateSlider value={item_rating.item_rating_value} hideValue={false} disabled={true}/>
                         </td>
                     </tr>
                 )

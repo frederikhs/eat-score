@@ -1,12 +1,12 @@
 import {deleteItem, Item} from "../request";
 import React, {useMemo} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import ReactSlider from "react-slider";
-import {FaArrowDown, FaArrowRight, FaArrowUp, FaClock, FaQuestion, FaTrash, FaUsers} from "react-icons/fa";
+import {FaArrowDown, FaArrowRight, FaArrowUp, FaClock, FaTrash, FaUsers} from "react-icons/fa";
 import Moment from "react-moment";
 import {FaArrowsUpDown} from "react-icons/fa6";
 import {useAccount} from "../Root";
 import InfoBadge from "./InfoBadge";
+import RateSlider from "./RateSlider";
 
 export default function DisplayItem(props: { item: Item, hide_rate_link?: boolean, show_delete_button?: boolean }) {
     const {account} = useAccount()
@@ -55,17 +55,8 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
 
             <div className={"mb-2"}>
                 <div className={"flex items-center space-x-4"}>
-                    <ReactSlider
-                        className="flex-grow h-[50px] horizontal-slider"
-                        markClassName="rating-mark h-[48px] w-[50px]"
-                        min={0}
-                        max={10}
-                        value={rating}
-                        disabled={true}
-                        thumbClassName={"text-center text-white rounded border-[5px] border-transparent rating-thumb " + (hasRating ? 'bg-gray-500' : 'bg-mango-600')}
-                        trackClassName="rating-track bg-gray-200 dark:bg-neutral-600 relative"
-                        renderThumb={(props, state) => <div {...props}>{hasRating ? state.valueNow : <FaQuestion className={"h-8"} />}</div>}
-                    />
+                    <RateSlider value={rating} hideValue={!hasRating} disabled={true}/>
+
                     {props.hide_rate_link !== true && (
                         <Link
                             to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}
@@ -79,12 +70,31 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
 
             <div className={"flex justify-between items-center"}>
                 <div className={"flex flex-wrap gap-y-2"}>
-                    <InfoBadge icon={<FaClock/>} title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>} description={`by ${props.item.item_created_by_account_name}`} hide={false}/>
-                    <InfoBadge icon={<FaUsers/>} title={`${props.item.item_rating_count} rating${props.item.item_rating_count !== 1 ? 's' : ''}`} hide={!hasRating}/>
+                    <InfoBadge
+                        icon={<FaClock/>}
+                        title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>}
+                        description={`by ${props.item.item_created_by_account_name}`}
+                        hide={false}
+                    />
+                    <InfoBadge
+                        icon={<FaUsers/>}
+                        title={`${props.item.item_rating_count} rating${props.item.item_rating_count !== 1 ? 's' : ''}`}
+                        hide={!hasRating}
+                    />
                     {props.item.max_item_rating_value !== null &&
-                        <InfoBadge icon={<FaArrowUp/>} title={props.item.max_item_rating_value} description={"Highest rating"} hide={!hasRating || props.item.item_rating_count <= 1}/>}
+                        <InfoBadge
+                            icon={<FaArrowUp/>}
+                            title={props.item.max_item_rating_value}
+                            description={"Highest rating"}
+                            hide={!hasRating || props.item.item_rating_count <= 1}
+                        />}
                     {props.item.min_item_rating_value !== null &&
-                        <InfoBadge icon={<FaArrowDown/>} title={props.item.min_item_rating_value} description={"Lowest rating"} hide={!hasRating || props.item.item_rating_count <= 1}/>}
+                        <InfoBadge
+                            icon={<FaArrowDown/>}
+                            title={props.item.min_item_rating_value}
+                            description={"Lowest rating"}
+                            hide={!hasRating || props.item.item_rating_count <= 1}
+                        />}
                     {props.item.standard_deviation_item_rating_value !== null && <InfoBadge
                         icon={<FaArrowsUpDown/>}
                         title={props.item.standard_deviation_item_rating_value}
@@ -93,8 +103,9 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                     />}
                     {canDeleteItem && props.show_delete_button &&
                         <div className={"flex"}>
-                            <span className={"badge badge-gray flex items-center space-x-1 hover:cursor-pointer"}
-                                  onClick={() => window.confirm(`Are you sure you want to delete ${props.item.item_name}?`) && deleteExistingItem()}
+                            <span
+                                className={"badge badge-gray flex items-center space-x-1 hover:cursor-pointer"}
+                                onClick={() => window.confirm(`Are you sure you want to delete ${props.item.item_name}?`) && deleteExistingItem()}
                             >
                                 <FaTrash/>
                                 <span>Delete</span>

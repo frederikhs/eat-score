@@ -1,9 +1,9 @@
 import {deleteVenue, Venue} from "../request";
-import ReactSlider from "react-slider";
 import React, {useMemo} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useAccount} from "../Root";
 import {FaTrash} from "react-icons/fa";
+import RateSlider from "./RateSlider";
 
 export default function DisplayVenue(props: { venue: Venue }) {
     const {account} = useAccount()
@@ -37,20 +37,10 @@ export default function DisplayVenue(props: { venue: Venue }) {
                 </Link>
             </div>
 
-            <ReactSlider
-                className="w-100 h-[50px] horizontal-slider mb-2"
-                markClassName="rating-mark h-[48px] w-[50px]"
-                min={0}
-                max={10}
-                value={props.venue.avg_venue_rating_value}
-                disabled={true}
-                thumbClassName="text-center bg-gray-500 text-white rounded border-[5px] border-transparent rating-thumb"
-                trackClassName="rating-track bg-gray-300 dark:bg-neutral-600 relative"
-                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-            />
+            <RateSlider value={props.venue.avg_venue_rating_value} hideValue={false} disabled={true}/>
 
             {canDeleteVenue &&
-                <div className={"mb-2"}>
+                <div className={"mt-2"}>
                     <div className={"flex"}>
                         <span
                             className={"badge badge-gray flex items-center space-x-1 hover:cursor-pointer"}
