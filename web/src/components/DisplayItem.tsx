@@ -78,7 +78,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
 
             <div className={"flex justify-between items-center"}>
                 <div className={"flex flex-wrap gap-y-2"}>
-                    <InfoBadge icon={<FaClock/>} title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>} hide={false}/>
+                    <InfoBadge icon={<FaClock/>} title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>} description={`by ${props.item.item_created_by_account_name}`} hide={false}/>
                     <InfoBadge icon={<FaUsers/>} title={`${props.item.item_rating_count} rating${props.item.item_rating_count !== 1 ? 's' : ''}`} hide={!hasRating}/>
                     {props.item.max_item_rating_value !== null &&
                         <InfoBadge icon={<FaArrowUp/>} title={props.item.max_item_rating_value} description={"Highest rating"} hide={!hasRating || props.item.item_rating_count <= 1}/>}
