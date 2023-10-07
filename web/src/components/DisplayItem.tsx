@@ -42,10 +42,10 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
     }
 
     return (
-        <div className="p-6 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-600 rounded-lg shadow">
+        <div className="box">
             <div className={"mb-2"}>
                 <Link to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}>
-                    <h5 className="sm:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white hover:underline">{props.item.item_name}</h5>
+                    <h5 className="heading-default hover:underline">{props.item.item_name}</h5>
                 </Link>
                 <Link to={`/venues/${props.item.venue_id}`}>
                     <p className={"hover:underline dark:text-white"}>{props.item.venue_name}</p>

@@ -22,6 +22,10 @@
     @apply bg-mango-100 text-mango-800
 }
 
+.box {
+    @apply p-6 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-600 rounded-lg shadow
+}
+
 .vertical-slider {
     height: 380px;
     width: 50px;

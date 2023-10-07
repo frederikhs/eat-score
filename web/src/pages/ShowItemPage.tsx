@@ -43,23 +43,25 @@ export default function ShowItemPage() {
     }, [])
 
     return (
-        <div className={"space-y-10"}>
+        <div className={"space-y-4"}>
             {item !== null && <DisplayItem item={item} hide_rate_link={true} show_delete_button={true}/>}
 
             {item?.has_rated_item === false && (
-                <>
+                <div className="box">
                     <h1 className={"heading-default"}>Rate this item</h1>
                     {venue !== null && item !== null && <Rate venue_id={venue.venue_id} item_id={item.item_id} onSubmit={() => fetchAll()}/>}
-                </>
+                </div>
             )}
 
-            <h1 className={"heading-default"}>All ratings</h1>
-            {item?.has_rated_item === false && (
-                <p className={"dark:text-white"}>You need to rate this item to reveal it's score</p>
-            )}
-            {itemRatings !== null && item?.has_rated_item && (
-                <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>
-            )}
+            <div className="box">
+                <h1 className={"heading-default"}>Ratings</h1>
+                {item?.has_rated_item === false && (
+                    <p className={"dark:text-white"}>You need to rate this item to reveal it's score</p>
+                )}
+                {itemRatings !== null && item?.has_rated_item && (
+                    <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>
+                )}
+            </div>
         </div>
     );
 }
