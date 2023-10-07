@@ -6,10 +6,8 @@ export default function ThemeSwitcher() {
 
     useEffect(() => {
         if (localStorage.darkMode === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
             setDarkMode(true);
         } else {
-            document.documentElement.classList.remove('dark')
             setDarkMode(false);
         }
     }, []);
