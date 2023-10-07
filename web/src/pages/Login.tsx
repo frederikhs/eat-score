@@ -70,7 +70,12 @@ export default function Login() {
                                     <span className={"flex justify-center"}><FaSpinner className={"animate-spin text-2xl flex justify-center"}/></span>}
                                 {!loading && <span>Request magic link</span>}
                             </button>
-                            {reason !== null && <p className={"text-center"}>{reason}</p>}
+
+                            {reason !== null && (
+                                <div className="bg-red-100 border border-red-400 text-red-700 py-2 px-4 rounded text-center mt-3 normal-case">
+                                    <span>{reason}</span>
+                                </div>
+                            )}
                         </div>
                         }
                         {hasCheckedLogin && hasSentMail && <div className={"text-center"}>
@@ -78,7 +83,7 @@ export default function Login() {
                                 <FaInbox className={"text-6xl text-green-600"}/>
                             </div>
                             <h1 className={"heading-default !text-green-600"}>Success, check your inbox </h1>
-                            <p>A magic login link has been sent to {"<"}{email}{">"}</p>
+                            <p>A magic login link has been sent to {"<"}{email.toLowerCase()}{">"}</p>
                         </div>
                         }
                     </div>
