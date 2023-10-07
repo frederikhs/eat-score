@@ -34,13 +34,22 @@ export default function Navigation(props: { authed: boolean, account?: Account }
                 </NavLink>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <div className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white dark:bg-neutral-900">
-
                         {props.authed && links.map((link, index) => {
                             return (
-                                <MenuLink key={index} link={link}/>
+                                <MenuLink key={index} link={link} show_title={true}/>
                             )
                         })}
-                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", icon: <FaKey/>}}/>}
+                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", icon: <FaKey/>}} show_title={true}/>}
+                    </div>
+                </div>
+                <div className="md:hidden" id="navbar-default">
+                    <div className="flex p-4 space-x-2 rounded-lg bg-white dark:bg-neutral-900">
+                        {props.authed && links.map((link, index) => {
+                            return (
+                                <MenuLink key={index} link={link} show_title={false}/>
+                            )
+                        })}
+                        {!props.authed && <MenuLink link={{to: "/login", name: "Login", icon: <FaKey/>}} show_title={true}/>}
                     </div>
                 </div>
             </div>
@@ -48,7 +57,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
     )
 }
 
-function MenuLink(props: { link: Link }) {
+function MenuLink(props: { link: Link, show_title: boolean }) {
     return (
         <NavLink
             className={({isActive}) => "block py-2 px-3 rounded " + (isActive ? "bg-mango-600 text-white" : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-500")}
@@ -56,7 +65,7 @@ function MenuLink(props: { link: Link }) {
         >
             <div className={"flex items-center space-x-3"}>
                 {props.link.icon}
-                <span>{props.link.name}</span>
+                {props.show_title && <span>{props.link.name}</span>}
             </div>
         </NavLink>
     )
