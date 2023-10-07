@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {createVenue, fetchAllVenues, Venue} from "../request";
 import DisplayVenue from "../components/DisplayVenue";
 import {useNavigate} from "react-router-dom";
+import {FaPlus} from "react-icons/fa";
 
 export default function ListVenuesPage() {
     const navigate = useNavigate()
@@ -42,29 +43,40 @@ export default function ListVenuesPage() {
     }
 
     return (
-        <div>
-            <h1 className={"heading-default"}>Venues</h1>
-            <div className="rounded overflow-hidden shadow-md mb-4 dark:bg-neutral-800">
-                <div className="px-6 py-4 space-x-4 flex">
-                    <input
-                        value={venueName}
-                        name={"venue_name"}
-                        placeholder={"The Burger Shop"}
-                        autoComplete={"off"}
-                        onChange={e => setVenueName(e.target.value)}
-                        className="text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-600 dark:border-neutral-700 dark:text-white"
-                        type="text"
-                    />
+        <div className={"space-y-4"}>
+            <div className="box">
+                <div className={"mb-2"}>
+                    <h5 className="heading-default hover:underline">Create new venue</h5>
+                </div>
+                <div className={"flex items-end space-x-2"}>
+                    <div className={"grow"}>
+                        <label htmlFor="item_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <input
+                            value={venueName}
+                            name={"venue_name"}
+                            placeholder={"The Burger Shop"}
+                            autoComplete={"off"}
+                            onChange={e => setVenueName(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-neutral-500 dark:focus:border-neutral-500"
+                            type="text"
+                            required/>
+                    </div>
                     <button
                         disabled={!canCreateNewVenue}
                         onClick={() => createNewVenue()}
-                        className={"flex-none text-white font-bold py-2 px-4 rounded " + (canCreateNewVenue ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 dark:bg-neutral-500 hover:cursor-not-allowed")}
-                    >Create new Venue
+                        className={"text-white font-bold py-2 px-4 rounded " + (canCreateNewVenue ? "bg-mango-600 hover:bg-mango-700" : "bg-gray-300 dark:bg-neutral-500 hover:cursor-not-allowed")}
+                    >
+                        <div className={"flex items-center justify-center space-x-3"}>
+                            <span>Create</span>
+                            <FaPlus/>
+                        </div>
                     </button>
                 </div>
-                {venueCreatedMessage !== null && <p className={"text-center mb-2"}>{venueCreatedMessage}</p>}
+                {venueCreatedMessage !== null && <p className={"text-center mb-2 dark:text-white"}>{venueCreatedMessage}</p>}
             </div>
-            <div className={"space-y-10 sm:columns-2"}>
+
+            <h5 className="heading-default">Venues</h5>
+            <div className={"space-y-4"}>
                 {venues.map((venue, index) => {
                     return (
                         <DisplayVenue key={index} venue={venue}/>
