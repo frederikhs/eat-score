@@ -1,16 +1,14 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {deleteItem, fetchItemByVenueIdAndItemId, fetchItemRatingsByVenueIdAndItemId, fetchVenueById, Item, ItemRating, Venue} from "../request";
-import ListVenue from "../components/Venue";
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {fetchItemByVenueIdAndItemId, fetchItemRatingsByVenueIdAndItemId, fetchVenueById, Item, ItemRating, Venue} from "../request";
+import {useParams} from "react-router-dom";
 import ListRatings from "../components/ListRatings";
 import Rate from "../components/Rate";
 import {useAccount} from "../Root";
-import ListItems from "../components/ListItems";
+import DisplayItem from "../components/DisplayItem";
 
 export default function ShowItemPage() {
     const {account} = useAccount()
     let {venue_id, item_id} = useParams();
-    const navigate = useNavigate()
     const [venue, setVenue] = useState<Venue | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [itemRatings, setItemRatings] = useState<ItemRating[] | null>(null);
@@ -44,47 +42,24 @@ export default function ShowItemPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const canDeleteItem = useMemo(() => {
-        if (item === null || account === undefined) {
-            return false
-        }
-
-        return item.item_created_by_account_id === account.account_id
-    }, [item, account]);
-
-    const deleteExistingItem = () => {
-        if (item === null || venue === null) {
-            return
-        }
-
-        deleteItem(venue.venue_id, item.item_id).then(r => {
-            if (r.code === 200) {
-                navigate(`/venues/${venue.venue_id}`)
-            }
-        })
-    }
-
     return (
         <div className={"space-y-10"}>
-            <h1 className={"heading-default"}>Venue</h1>
-            {venue !== null && <ListVenue venue={venue}/>}
+            {item !== null && <DisplayItem item={item} hide_rate_link={true} show_delete_button={true}/>}
 
-            <h1 className={"heading-default"}>Item</h1>
-            {canDeleteItem &&
-                <button
-                    onClick={() => window.confirm("Are you sure?") && deleteExistingItem()}
-                    className={"text-white font-bold py-2 px-4 rounded bg-red-700 hover:bg-red-600"}
-                >
-                    Delete Item
-                </button>
-            }
-            {item !== null && <ListItems items={[item]} show_venue={false}/>}
+            {item?.has_rated_item === false && (
+                <>
+                    <h1 className={"heading-default"}>Rate this item</h1>
+                    {venue !== null && item !== null && <Rate venue_id={venue.venue_id} item_id={item.item_id} onSubmit={() => fetchAll()}/>}
+                </>
+            )}
 
-            <h1 className={"heading-default"}>Rate this item</h1>
-            {venue !== null && item !== null && <Rate venue_id={venue.venue_id} item_id={item.item_id} onSubmit={() => fetchAll()}/>}
-
-            <h1 className={"heading-default"}>Account ratings</h1>
-            {itemRatings !== null && item?.has_rated_item && <ListRatings item_ratings={itemRatings}/>}
+            <h1 className={"heading-default"}>All ratings</h1>
+            {item?.has_rated_item === false && (
+                <p className={"dark:text-white"}>You need to rate this item to reveal it's score</p>
+            )}
+            {itemRatings !== null && item?.has_rated_item && (
+                <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>
+            )}
         </div>
     );
 }

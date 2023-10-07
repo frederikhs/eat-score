@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/frederikhs/eat-score/database"
 	"github.com/frederikhs/eat-score/middleware"
 	"github.com/frederikhs/eat-score/response"
@@ -118,7 +119,14 @@ func CreateItemRatingByVenueIdAndItemId(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
-		err = db.CreateItemRating(item.ItemId, authedContext.Account.AccountId, rating.Value)
+		if rating.Value == -1 {
+			err = db.DeleteItemRating(item.ItemId, authedContext.Account.AccountId)
+		} else if rating.Value >= 0 && rating.Value <= 10 {
+			err = db.CreateItemRating(item.ItemId, authedContext.Account.AccountId, rating.Value)
+		} else {
+			err = fmt.Errorf("rating of item %d must be of value 0 trough 10", item.ItemId)
+		}
+
 		if err != nil {
 			c.JSON(response.Error(err))
 			return

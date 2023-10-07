@@ -32,3 +32,8 @@ func (db *Database) CreateItemRating(itemId int, accountId, value int) error {
 	_, err := db.Connection.Exec("INSERT INTO eat_score.item_rating (item_rating_item_id, item_rating_account_id, item_rating_value) VALUES ($1, $2, $3) ON CONFLICT (item_rating_item_id, item_rating_account_id) DO UPDATE SET item_rating_value = $3", itemId, accountId, value)
 	return err
 }
+
+func (db *Database) DeleteItemRating(itemId int, accountId int) error {
+	_, err := db.Connection.Exec("DELETE FROM eat_score.item_rating WHERE item_rating_item_id = $1 AND item_rating_account_id = $2", itemId, accountId)
+	return err
+}
