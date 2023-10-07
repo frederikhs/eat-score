@@ -1,17 +1,15 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {deleteVenue, fetchItemsByVenueId, fetchVenueById, Item, Venue} from "../request";
-import ListVenue from "../components/Venue";
-import {useNavigate, useParams} from "react-router-dom";
-import {useAccount} from "../Root";
-import CreateItem from "../components/CreateItem";
-import ListItems from "../components/ListItems";
+import React, {useEffect, useState} from 'react'
+import {fetchItemsByVenueId, fetchVenueById, Item, Venue} from "../request"
+import DisplayVenue from "../components/DisplayVenue"
+import {useNavigate, useParams} from "react-router-dom"
+import CreateItem from "../components/CreateItem"
+import ListItems from "../components/ListItems"
 
 export default function ShowVenuePage() {
-    const {account} = useAccount()
-    let {venue_id} = useParams();
+    let {venue_id} = useParams()
     const navigate = useNavigate()
-    const [venue, setVenue] = useState<Venue | null>(null);
-    const [items, setItems] = useState<Item[] | null>(null);
+    const [venue, setVenue] = useState<Venue | null>(null)
+    const [items, setItems] = useState<Item[] | null>(null)
 
     useEffect(() => {
         fetchVenueById(venue_id as unknown as number).then((r) => {
@@ -29,25 +27,6 @@ export default function ShowVenuePage() {
         })
     }, [venue_id])
 
-    const canDeleteVenue = useMemo(() => {
-        if (venue === null || account === undefined) {
-            return false
-        }
-
-        return venue.venue_created_by_account_id === account.account_id
-    }, [venue, account]);
-
-    const deleteExistingVenue = () => {
-        if (venue === null) {
-            return
-        }
-
-        deleteVenue(venue.venue_id).then(r => {
-            if (r.code === 200) {
-                navigate("/venues")
-            }
-        })
-    }
 
     const createItem = (item_id: number) => {
         if (venue === null) {
@@ -64,17 +43,19 @@ export default function ShowVenuePage() {
     }
 
     return (
-        <div className={"space-y-10"}>
-            <h1 className={"heading-default"}>Venue</h1>
-            {canDeleteVenue &&
-                <button onClick={() => window.confirm("Are you sure?") && deleteExistingVenue()} className={"text-white font-bold py-2 px-4 rounded bg-red-700 hover:bg-red-600"}>
-                    Delete Venue
-                </button>
-            }
-            <ListVenue venue={venue}/>
-            <h1 className={"heading-default"}>Items</h1>
+        <div className={"space-y-4"}>
+            <DisplayVenue venue={venue}/>
 
-            {items !== null && <ListItems items={items} show_venue={false} extra_row={<CreateItem venue_id={venue.venue_id} onSubmit={createItem}/>}/>}
+            <div className={"box"}>
+                <CreateItem venue_id={venue.venue_id} onSubmit={createItem}/>
+            </div>
+
+            {items !== null && items.length > 0 && (
+                <>
+                    <h5 className="heading-default">Items</h5>
+                    <ListItems items={items} show_venue={false}/>
+                </>
+            )}
         </div>
-    );
+    )
 }

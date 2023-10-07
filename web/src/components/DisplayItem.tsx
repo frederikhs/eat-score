@@ -53,7 +53,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                 </Link>
             </div>
 
-            <div className={"mb-3"}>
+            <div className={"mb-2"}>
                 <div className={"flex items-center space-x-4"}>
                     <ReactSlider
                         className="flex-grow h-[50px] horizontal-slider"

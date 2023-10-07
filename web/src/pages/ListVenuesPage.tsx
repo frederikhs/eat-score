@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {createVenue, fetchAllVenues, Venue} from "../request";
-import ListVenue from "../components/Venue";
+import DisplayVenue from "../components/DisplayVenue";
 import {useNavigate} from "react-router-dom";
 
 export default function ListVenuesPage() {
@@ -67,7 +67,7 @@ export default function ListVenuesPage() {
             <div className={"space-y-10 sm:columns-2"}>
                 {venues.map((venue, index) => {
                     return (
-                        <ListVenue key={index} venue={venue}/>
+                        <DisplayVenue key={index} venue={venue}/>
                     )
                 })}
             </div>
