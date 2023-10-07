@@ -6,6 +6,7 @@ import {FaArrowDown, FaArrowRight, FaArrowUp, FaClock, FaQuestion, FaTrash, FaUs
 import Moment from "react-moment";
 import {FaArrowsUpDown} from "react-icons/fa6";
 import {useAccount} from "../Root";
+import InfoBadge from "./InfoBadge";
 
 export default function DisplayItem(props: { item: Item, hide_rate_link?: boolean, show_delete_button?: boolean }) {
     const {account} = useAccount()
@@ -102,22 +103,6 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                     }
                 </div>
             </div>
-        </div>
-    )
-}
-
-function InfoBadge(props: { icon: React.ReactNode, title: React.ReactNode, hide: boolean, description?: string }) {
-    if (props.hide) {
-        return null
-    }
-
-    return (
-        <div className={"flex"}>
-            <span className={"badge group badge-gray flex items-center space-x-1"}>
-                {props.icon}
-                <span>{props.title}</span>
-                {props.description && <span className={"hidden group-hover:block"}>({props.description})</span>}
-            </span>
         </div>
     )
 }

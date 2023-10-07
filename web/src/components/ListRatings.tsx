@@ -1,6 +1,9 @@
 import {createItemRating, ItemRating} from "../request";
 import ReactSlider from "react-slider";
 import React from "react";
+import Moment from "react-moment";
+import InfoBadge from "./InfoBadge";
+import {FaClock} from "react-icons/fa";
 
 export default function ListRatings(props: { item_ratings: ItemRating[], account_id: number, onDelete: () => void }) {
     const deleteItemRating = (itemRating: ItemRating) => {
@@ -24,7 +27,12 @@ export default function ListRatings(props: { item_ratings: ItemRating[], account
             {props.item_ratings.map((item_rating, index) => {
                 return (
                     <tr key={index} className={"even:bg-gray-50 dark:even:bg-neutral-800 odd:bg-white dark:odd:bg-neutral-700"}>
-                        <td className="px-6 py-4">{item_rating.item_rating_account_name}</td>
+                        <td className="px-6 py-4">
+                            <div className={"flex space-x-2"}>
+                                <span>{item_rating.item_rating_account_name}</span>
+                                <InfoBadge icon={<FaClock/>} title={<span><Moment date={item_rating.item_rating_created_at} fromNow/></span>} hide={false}/>
+                            </div>
+                        </td>
                         <td>
                             {item_rating.item_rating_account_id === props.account_id && (
                                 <button

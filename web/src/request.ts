@@ -147,6 +147,7 @@ export interface ItemRating {
     venue_id: number
     venue_name: string
     item_rating_value: number
+    item_rating_created_at: string
     item_rating_account_id: number
     item_rating_account_name: string
 }
