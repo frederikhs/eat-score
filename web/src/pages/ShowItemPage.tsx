@@ -12,6 +12,7 @@ export default function ShowItemPage() {
     const [venue, setVenue] = useState<Venue | null>(null);
     const [item, setItem] = useState<Item | null>(null);
     const [itemRatings, setItemRatings] = useState<ItemRating[] | null>(null);
+    const [isPeeking, setIsPeeking] = useState<boolean>(false);
 
     const fetchVenue = () => {
         fetchVenueById(venue_id as unknown as number).then((r) => {
@@ -44,7 +45,7 @@ export default function ShowItemPage() {
 
     return (
         <div className={"space-y-4"}>
-            {item !== null && <DisplayItem item={item} hide_rate_link={true} show_delete_button={true}/>}
+            {item !== null && <DisplayItem item={item} hide_rate_link={true} show_delete_button={true} is_peeking={isPeeking}/>}
 
             {item?.has_rated_item === false && (
                 <div className="box">
@@ -56,7 +57,7 @@ export default function ShowItemPage() {
             <div className="box">
                 <h1 className={"heading-default"}>Ratings</h1>
                 {item?.has_rated_item === false && (
-                    <p className={"dark:text-white"}>You need to rate this item to reveal it's score</p>
+                    <p className={"dark:text-white"}>You need to rate this item to reveal it's score. If you want a peak hover <button onMouseEnter={() => setIsPeeking(true)} onMouseLeave={() => setIsPeeking(false)} className={"hover:underline text-blue-600"}>here</button></p>
                 )}
                 {itemRatings !== null && item?.has_rated_item && (
                     <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>

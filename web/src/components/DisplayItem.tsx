@@ -8,7 +8,7 @@ import {useAccount} from "../Root";
 import InfoBadge from "./InfoBadge";
 import RateSlider from "./RateSlider";
 
-export default function DisplayItem(props: { item: Item, hide_rate_link?: boolean, show_delete_button?: boolean }) {
+export default function DisplayItem(props: { item: Item, hide_rate_link?: boolean, show_delete_button?: boolean, is_peeking?: boolean }) {
     const {account} = useAccount()
     const navigate = useNavigate()
 
@@ -20,12 +20,12 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
     }, [props.item])
 
     const rating = useMemo(() => {
-        if (hasRating) {
+        if (hasRating || props.is_peeking) {
             return props.item.avg_item_rating_value as number
         }
 
         return 5;
-    }, [hasRating, props.item])
+    }, [hasRating, props.item, props.is_peeking])
 
     const canDeleteItem = useMemo(() => {
         if (account === undefined) {
@@ -55,7 +55,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
 
             <div className={"mb-2"}>
                 <div className={"flex items-center space-x-4"}>
-                    <RateSlider value={rating} hideValue={!hasRating} disabled={true}/>
+                    <RateSlider value={rating} hideValue={!props.is_peeking && !hasRating} disabled={true}/>
 
                     {props.hide_rate_link !== true && (
                         <Link
