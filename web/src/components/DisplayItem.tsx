@@ -83,8 +83,8 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                 <div className={"flex flex-wrap gap-y-2"}>
                     <InfoBadge
                         icon={<FaClock/>}
-                        title={<span>Created <Moment date={props.item.item_created_at} fromNow/></span>}
-                        description={`by ${props.item.item_created_by_account_name}`}
+                        title={<span><Moment date={props.item.item_created_at} fromNow/></span>}
+                        description={props.item.item_created_by_account_name}
                         hide={false}
                     />
                     <InfoBadge

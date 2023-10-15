@@ -46,7 +46,7 @@ export default function ListVenuesPage() {
         <div className={"space-y-4"}>
             <div className="box">
                 <div className={"mb-2"}>
-                    <h5 className="heading-default hover:underline">Create new venue</h5>
+                    <h5 className="heading-default">Create new venue</h5>
                 </div>
                 <div className={"flex items-end space-x-2"}>
                     <div className={"grow"}>
