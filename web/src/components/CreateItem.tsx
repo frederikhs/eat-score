@@ -21,7 +21,7 @@ export default function CreateItem(props: { venue_id: number, onSubmit: (item_id
     return (
         <div>
             <div className={"mb-2"}>
-                <h5 className="heading-default hover:underline">Create new item</h5>
+                <h5 className="heading-default">Create new item</h5>
             </div>
             <div className={"flex items-end space-x-2"}>
                 <div className={"grow"}>

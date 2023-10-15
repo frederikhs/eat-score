@@ -30,7 +30,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <NavLink to={props.authed ? "/" : "#"} className="flex items-center">
                     <img src={knife_fork_plate} className="h-8 mr-3" alt="Eat Score Logo"/>
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Eat Score</span>
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hover:underline">Eat Score</span>
                 </NavLink>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <div className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white dark:bg-neutral-900">
