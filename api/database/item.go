@@ -60,7 +60,7 @@ func (db *Database) GetItems(accountId int) ([]Item, error) {
 
 func (db *Database) GetItemsByVenueId(accountId int, venueId int) ([]Item, error) {
 	var items []Item
-	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND venue_id = $2", accountId, venueId)
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND venue_id = $2 ORDER BY item_created_at DESC", accountId, venueId)
 	if err != nil {
 		return nil, err
 	}
