@@ -57,7 +57,14 @@ export default function ShowItemPage() {
             <div className="box">
                 <h1 className={"heading-default"}>Ratings</h1>
                 {item?.has_rated_item === false && (
-                    <p className={"dark:text-white"}>You need to rate this item to reveal it's score. If you want a peak hover <button onMouseEnter={() => setIsPeeking(true)} onMouseLeave={() => setIsPeeking(false)} className={"hover:underline text-blue-600"}>here</button></p>
+                    <p className={"dark:text-white"}>You need to rate this item to reveal it's score.
+                        {itemRatings !== null && itemRatings.length > 0 && (
+                            <span>
+                                &nbsp;If you want a peak hover&nbsp;
+                                <button onMouseEnter={() => setIsPeeking(true)} onMouseLeave={() => setIsPeeking(false)} className={"hover:underline text-blue-600"}>here</button>
+                            </span>
+                        )}
+                    </p>
                 )}
                 {itemRatings !== null && item?.has_rated_item && (
                     <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>
