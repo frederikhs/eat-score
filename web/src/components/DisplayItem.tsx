@@ -45,9 +45,20 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
     return (
         <div className="box">
             <div className={"mb-2"}>
-                <Link to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}>
-                    <h5 className="heading-default hover:underline">{props.item.item_name}</h5>
-                </Link>
+
+                <div className={"flex justify-between"}>
+                    <Link to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}>
+                        <h5 className="heading-default hover:underline">{props.item.item_name}</h5>
+                    </Link>
+
+                    {props.item.item_price_dkk > 0 && (
+                        <h5 className={"heading-default"}>
+                            {props.item.item_price_dkk > 0 && `${props.item.item_price_dkk} kr.`}
+                        </h5>
+                    )}
+                </div>
+
+
                 <Link to={`/venues/${props.item.venue_id}`}>
                     <p className={"hover:underline dark:text-white"}>{props.item.venue_name}</p>
                 </Link>
