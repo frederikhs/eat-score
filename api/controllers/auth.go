@@ -124,7 +124,7 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 
 		err = db.SetMagicLoginLinkUsedAt(l.MagicLoginLinkHash)
 		if err != nil {
-			db.Connection.Rollback()
+			_ = db.Connection.Rollback()
 			c.JSON(response.Error(err))
 			return
 		}
@@ -133,7 +133,7 @@ func LoginWithMagicLink(db *database.Database) func(c *gin.Context) {
 
 		err = db.CreateSession(sessionId, account, link)
 		if err != nil {
-			db.Connection.Rollback()
+			_ = db.Connection.Rollback()
 			c.JSON(response.Error(err))
 			return
 		}

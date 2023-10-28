@@ -1,0 +1,13 @@
+services:
+  app:
+    image: eat-score-api:test
+    build:
+      target: build
+    environment:
+      VERSION: "test"
+  web:
+    image: eat-score-web:test
+    build:
+      target: build
+    environment:
+      REACT_APP_VERSION: "test"

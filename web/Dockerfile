@@ -4,7 +4,7 @@ RUN chown node:node .
 USER node
 CMD npm install && npm run start
 
-FROM node:alpine as intermediate
+FROM node:alpine as build
 WORKDIR /web
 COPY package*.json .
 RUN npm install
@@ -17,4 +17,4 @@ RUN npm run build
 FROM nginx:mainline-alpine as production
 COPY server.conf /etc/nginx/conf.d/nginx.conf
 
-COPY --from=intermediate --chown=nginx:nginx /web/build /usr/share/nginx/html
+COPY --from=build --chown=nginx:nginx /web/build /usr/share/nginx/html

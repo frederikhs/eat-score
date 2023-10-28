@@ -5,6 +5,7 @@ import Navigation from "./Navigation";
 import Frame from "../components/Frame";
 
 export default function MagicLogin() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams()
     const magicLoginLinkHash = searchParams.get('magic_login_link_hash')
     const navigate = useNavigate()
