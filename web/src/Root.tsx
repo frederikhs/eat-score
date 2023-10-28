@@ -3,6 +3,7 @@ import {Outlet, useNavigate, useOutletContext} from "react-router-dom";
 import Navigation from "./pages/Navigation";
 import Frame from "./components/Frame";
 import {Account, AccountInfo} from "./request";
+import Version from "./components/Version";
 
 interface ContextType {
     account: Account
@@ -30,6 +31,7 @@ export default function Root() {
         <div>
             <Navigation authed={true} account={account}/>
             <Frame content={<Outlet context={{account}}/>}/>
+            <Version />
         </div>
     );
 }
