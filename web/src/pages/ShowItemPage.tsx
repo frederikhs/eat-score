@@ -66,7 +66,7 @@ export default function ShowItemPage() {
                         )}
                     </p>
                 )}
-                {itemRatings !== null && item?.has_rated_item && (
+                {itemRatings !== null && item?.has_rated_item && account !== undefined && (
                     <ListRatings item_ratings={itemRatings} account_id={account.account_id} onDelete={() => fetchAll()}/>
                 )}
             </div>
