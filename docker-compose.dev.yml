@@ -4,7 +4,7 @@ services:
     build:
       target: development
     volumes:
-      - ./api:/api
+      - ./api:/app
     environment:
       VERSION: "development"
   web:
