@@ -38,7 +38,7 @@ export default function ListVenuesPage() {
 
     if (venues === null) {
         return (
-            <p>Loading</p>
+            <h1 className={"heading-default text-center"}>Loading...</h1>
         )
     }
 

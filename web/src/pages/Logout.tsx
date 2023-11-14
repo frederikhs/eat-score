@@ -14,6 +14,6 @@ export default function LogoutPage() {
     })
 
     return (
-        <p>Logging you out...</p>
-    );
+        <h1 className={"heading-default text-center"}>Logging you out...</h1>
+    )
 }

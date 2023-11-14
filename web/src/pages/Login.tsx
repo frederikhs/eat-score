@@ -84,6 +84,7 @@ export default function Login() {
                             </div>
                             <h1 className={"heading-default !text-green-600"}>Success, check your inbox </h1>
                             <p>A magic login link has been sent to {"<"}{email.toLowerCase()}{">"}</p>
+                            <p>The email can take some time to arrive on <span className={"font-bold"}>Outlook</span> hosted addresses</p>
                         </div>
                         }
                     </div>
