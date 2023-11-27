@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/frederikhs/go-connection v0.5.0
-	github.com/frederikhs/sandsmad_parser v1.0.7
+	github.com/frederikhs/sandsmad_parser v1.0.8
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.4.0
