@@ -47,9 +47,15 @@ export default function UsersPage() {
         return null
     }
 
+    if (statisticBoundaries === null) {
+        return (
+            <h1 className={"heading-default text-center"}>Loading...</h1>
+        )
+    }
+
     return (
         <div className={"box"}>
-            {itemRatingAccountStatistics !== null && statisticBoundaries !== null &&
+            {itemRatingAccountStatistics !== null &&
                 <table className="w-full text-left dark:text-white table-fixed">
                     <thead>
                     <tr>
