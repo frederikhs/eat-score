@@ -28,7 +28,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
 
     return (
         <nav className="bg-white dark:bg-neutral-900 border-gray-200 sticky top-0 z-10 shadow-md">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto sm:p-4 p-2">
                 <NavLink to={props.authed ? "/" : "#"} className="flex items-center">
                     <img src={knife_fork_plate} className="h-8 mr-3" alt="Eat Score Logo"/>
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hover:underline">Eat Score</span>
@@ -44,7 +44,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
                     </div>
                 </div>
                 <div className="md:hidden" id="navbar-default">
-                    <div className="flex p-4 space-x-2 rounded-lg bg-white dark:bg-neutral-900">
+                    <div className="flex sm:p-4 p-2 sm:space-x-2 space-x-1 rounded-lg bg-white dark:bg-neutral-900">
                         {props.authed && links.map((link, index) => {
                             return (
                                 <MenuLink key={index} link={link} show_title={false}/>
