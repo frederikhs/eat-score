@@ -38,3 +38,35 @@ func (db *Database) DeleteItemRating(itemId int, accountId int) error {
 	_, err := db.Connection.Exec("DELETE FROM eat_score.item_rating WHERE item_rating_item_id = $1 AND item_rating_account_id = $2", itemId, accountId)
 	return err
 }
+
+type ItemRatingAccountStatistics struct {
+	AccountId   int      `db:"account_id" json:"account_id"`
+	AccountName string   `db:"account_name" json:"account_name"`
+	Count       int      `db:"count" json:"count"`
+	Avg         *float64 `db:"avg" json:"avg"`
+	StdDev      *float64 `db:"std_dev" json:"std_dev"`
+}
+
+func (db *Database) GetItemRatingAccountStatistics() ([]ItemRatingAccountStatistics, error) {
+	var stats []ItemRatingAccountStatistics
+	err := db.Connection.Select(&stats, `
+		SELECT a.account_id,
+			   a.account_name,
+			   COUNT(1)                            as count,
+			   ROUND(AVG(item_rating_value), 1)    as avg,
+			   ROUND(stddev(item_rating_value), 1) as std_dev
+		FROM eat_score.account a
+				 JOIN eat_score.item_rating on item_rating.item_rating_account_id = a.account_id
+		GROUP BY 1, 2
+		ORDER BY count DESC
+`)
+	if err != nil {
+		return nil, err
+	}
+
+	if stats == nil {
+		stats = []ItemRatingAccountStatistics{}
+	}
+
+	return stats, nil
+}

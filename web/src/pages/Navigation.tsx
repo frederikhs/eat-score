@@ -3,7 +3,7 @@ import React, {useMemo} from "react";
 import {NavLink} from "react-router-dom";
 import {Account} from "../request";
 import {FaBurger, FaShop} from "react-icons/fa6";
-import {FaKey, FaUser} from "react-icons/fa";
+import {FaKey, FaUser, FaUsers} from "react-icons/fa";
 import {firstWord} from "../util";
 
 interface Link {
@@ -21,6 +21,7 @@ export default function Navigation(props: { authed: boolean, account?: Account }
         return [
             {to: "/", name: "Items", icon: <FaBurger/>},
             {to: "/venues", name: "Venues", icon: <FaShop/>},
+            {to: "/users", name: "Users", icon: <FaUsers/>},
             {to: "/me", name: firstWord(props.account.account_name), icon: <FaUser/>},
         ]
     }, [props.account]);

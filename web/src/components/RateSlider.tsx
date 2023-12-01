@@ -7,13 +7,15 @@ export default function RateSlider(props: {
     hideValue: boolean,
     disabled: boolean,
     onChange?: ((value: number, index: number) => void)
+    min?: number
+    max?: number
 }) {
     return (
         <ReactSlider
             className="h-[50px] horizontal-slider flex-grow"
             markClassName="rating-mark h-[48px] w-[50px]"
-            min={0}
-            max={10}
+            min={props.min ? props.min : 0}
+            max={props.max ? props.max : 10}
             value={props.value}
             disabled={props.disabled}
             onChange={props.onChange}

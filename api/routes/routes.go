@@ -21,6 +21,7 @@ func Register(r *gin.Engine, db *database.Database) {
 
 func registerAuthedRoutes(r *gin.RouterGroup, db *database.Database) {
 	r.GET("/me", controllers.AccountInfo())
+	r.GET("/accounts/item-rating-statistics", controllers.GetItemRatingAccountStatistics(db))
 
 	r.GET("/venues", controllers.GetAllVenues(db))
 	r.POST("/venues", controllers.CreateVenue(db))

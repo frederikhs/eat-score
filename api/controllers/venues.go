@@ -248,3 +248,15 @@ func DeleteVenue(db *database.Database) gin.HandlerFunc {
 		c.JSON(response.Message(http.StatusOK, "deleted venue"))
 	}
 }
+
+func GetItemRatingAccountStatistics(db *database.Database) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		stats, err := db.GetItemRatingAccountStatistics()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, stats)
+	}
+}

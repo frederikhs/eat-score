@@ -42,7 +42,7 @@ export default function ShowVenuePage() {
             return null
         }
 
-        if (venue_id as unknown as number != 7) {
+        if (venue_id !== "7") {
             return null
         }
 
@@ -53,7 +53,7 @@ export default function ShowVenuePage() {
                 value: item.avg_item_rating_value,
             }
         })
-    }, [items])
+    }, [items, venue_id])
 
     if (venue === null) {
         return (
