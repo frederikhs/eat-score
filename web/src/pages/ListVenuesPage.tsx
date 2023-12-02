@@ -50,9 +50,10 @@ export default function ListVenuesPage() {
                 </div>
                 <div className={"flex items-end space-x-2"}>
                     <div className={"grow"}>
-                        <label htmlFor="item_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <label htmlFor="venue_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                         <input
                             value={venueName}
+                            id={"venue_name"}
                             name={"venue_name"}
                             placeholder={"The Burger Shop"}
                             autoComplete={"off"}

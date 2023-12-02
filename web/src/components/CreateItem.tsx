@@ -28,6 +28,7 @@ export default function CreateItem(props: { venue_id: number, onSubmit: (item_id
                     <label htmlFor="item_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                     <input
                         value={itemName}
+                        id={"item_name"}
                         name={"item_name"}
                         placeholder={"Durum Menu"}
                         autoComplete={"off"}
@@ -40,6 +41,7 @@ export default function CreateItem(props: { venue_id: number, onSubmit: (item_id
                     <label htmlFor="item_price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price (DKK). 0 DKK if free</label>
                     <input
                         value={itemPriceDKK}
+                        id={"item_price"}
                         name={"item_price"}
                         placeholder={"75"}
                         autoComplete={"off"}
