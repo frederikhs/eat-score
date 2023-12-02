@@ -69,7 +69,10 @@ export default function StatisticsPage() {
                     {itemRatingAccountStatistics.map((stat, index) => {
                         return (
                             <tr key={index} className={"odd:bg-gray-100 dark:even:bg-neutral-800 even:bg-white dark:odd:bg-neutral-700"}>
-                                <td className="px-3 py-2">{firstWord(stat.account_name)}</td>
+                                <td className="px-3 py-2">
+                                    <span className={"lg:hidden"}>{firstWord(stat.account_name)}</span>
+                                    <span className={"hidden lg:block"}>{stat.account_name}</span>
+                                </td>
                                 <td className="px-3 py-2">
                                     <RateSlider
                                         value={stat.count}
