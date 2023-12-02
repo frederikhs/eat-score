@@ -60,9 +60,18 @@ export default function StatisticsPage() {
                     <thead>
                     <tr>
                         <th className="px-3 py-2">Name</th>
-                        <th className="px-3 py-2">Number of ratings</th>
-                        <th className="px-3 py-2">Average rating</th>
-                        <th className="px-3 py-2">Standard deviation</th>
+                        <th className="px-3 py-2">
+                            <span className={"lg:hidden"}>No. of ratings</span>
+                            <span className={"hidden lg:block"}>Number of ratings</span>
+                        </th>
+                        <th className="px-3 py-2">
+                            <span className={"lg:hidden"}>Avg rating</span>
+                            <span className={"hidden lg:block"}>Average rating</span>
+                        </th>
+                        <th className="px-3 py-2">
+                            <span className={"lg:hidden"}>Std Dev</span>
+                            <span className={"hidden lg:block"}>Standard deviation</span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
