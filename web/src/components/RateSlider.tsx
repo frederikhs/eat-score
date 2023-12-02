@@ -9,6 +9,7 @@ export default function RateSlider(props: {
     onChange?: ((value: number, index: number) => void)
     min?: number
     max?: number
+    show_decimals?: boolean
 }) {
     return (
         <ReactSlider
@@ -21,7 +22,7 @@ export default function RateSlider(props: {
             onChange={props.onChange}
             thumbClassName={"text-center text-white rounded border-[5px] border-transparent rating-thumb " + (props.hideValue || !props.disabled ? 'bg-mango-600' : 'bg-gray-500')}
             trackClassName="rating-track bg-gray-200 dark:bg-neutral-600 relative"
-            renderThumb={(_props, state) => <div {..._props}>{props.hideValue ? <FaQuestion className={"h-8"}/> : state.valueNow}</div>}
+            renderThumb={(_props, state) => <div {..._props}>{props.hideValue ? <FaQuestion className={"h-8"}/> : (props.show_decimals ? props.value : state.valueNow)}</div>}
         />
     )
 }

@@ -86,6 +86,7 @@ export default function UsersPage() {
                                         max={statisticBoundaries.avg.max + 1}
                                         hideValue={false}
                                         disabled={true}
+                                        show_decimals={true}
                                     />
                                 </td>
                                 <td className="px-3 py-2">
@@ -95,6 +96,7 @@ export default function UsersPage() {
                                         max={statisticBoundaries.std_dev.max + 1}
                                         hideValue={false}
                                         disabled={true}
+                                        show_decimals={true}
                                     />
                                 </td>
                             </tr>
