@@ -12,7 +12,7 @@ import Items from "./pages/Items";
 import ListVenuesPage from "./pages/ListVenuesPage";
 import ShowVenuePage from "./pages/ShowVenuePage";
 import ShowItemPage from "./pages/ShowItemPage";
-import UsersPage from "./pages/UsersPage";
+import StatisticsPage from "./pages/StatisticsPage";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
                 element: <ShowItemPage/>,
             },
             {
-                path: "/users",
-                element: <UsersPage/>,
+                path: "/statistics",
+                element: <StatisticsPage/>,
             },
             {
                 path: "/me",

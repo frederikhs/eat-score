@@ -12,7 +12,7 @@ function maxCountG(array: any[], key: string) {
     return Math.max(...array.map((stat) => stat[key]))
 }
 
-export default function UsersPage() {
+export default function StatisticsPage() {
     const {account} = useAccount()
     const [itemRatingAccountStatistics, setItemRatingAccountStatistics] = useState<ItemRatingAccountStatistic[] | null>(null);
 
