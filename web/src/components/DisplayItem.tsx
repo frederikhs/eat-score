@@ -73,7 +73,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                             to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}
                             className={"text-white text-center font-bold flex items-center space-x-1 py-2 px-4 rounded " + (hasRating ? 'bg-gray-300 dark:bg-neutral-600 hover:bg-gray-500 hover:dark:bg-neutral-700' : 'bg-mango-600 hover:bg-mango-700')}
                         >
-                            <span>Rate</span><FaArrowRight/>
+                            <span className={"w-12"}>{hasRating ? 'Show' : 'Rate'}</span><FaArrowRight/>
                         </Link>
                     )}
                 </div>
