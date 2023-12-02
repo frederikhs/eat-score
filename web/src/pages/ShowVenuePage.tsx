@@ -50,7 +50,7 @@ export default function ShowVenuePage() {
             return {
                 created_at: moment(item.item_created_at).format("YYYY-MM-DD"),
                 name: item.item_name,
-                value: item.avg_item_rating_value,
+                value: item.avg_item_rating_value !== null ? Math.round( item.avg_item_rating_value) : null,
             }
         })
     }, [items, venue_id])
@@ -78,7 +78,6 @@ export default function ShowVenuePage() {
                             <XAxis dataKey="name" hide={true}/>
                             <YAxis type="number" domain={[0, 10]} hide={true}/>
                             <Tooltip/>
-                            {/*<Legend />*/}
                             <Line type="monotone" dataKey="value" stroke="#82ca9d"/>
                         </LineChart>
                     </ResponsiveContainer>
