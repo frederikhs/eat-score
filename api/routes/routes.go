@@ -35,4 +35,5 @@ func registerAuthedRoutes(r *gin.RouterGroup, db *database.Database) {
 	r.POST("/venues/:venue_id/items/:item_id/ratings", controllers.CreateItemRatingByVenueIdAndItemId(db))
 
 	r.GET("/items", controllers.GetAllItems(db))
+	r.GET("/items/paginated", controllers.GetAllItemsPaginated(db))
 }

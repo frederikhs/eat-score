@@ -20,3 +20,7 @@ func ResourceAlreadyExists() (int, any) {
 func Error(err error) (int, any) {
 	return Message(http.StatusInternalServerError, err.Error())
 }
+
+func UserError(err error) (int, any) {
+	return Message(http.StatusBadRequest, err.Error())
+}

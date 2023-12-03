@@ -100,6 +100,10 @@ export const fetchAllItems = async (): Promise<ApiResponse> => {
     return await getJson(`${BASE_API_URI}/items`)
 }
 
+export const fetchAllItemsPaginated = async (page_no: number): Promise<ApiResponse> => {
+    return await getJson(`${BASE_API_URI}/items/paginated?page_no=${page_no}`)
+}
+
 export const createItem = async (item_venue_id: number, item_name: string, item_price_dkk: number): Promise<ApiResponse> => {
     return await postJson(`${BASE_API_URI}/venues/${item_venue_id}/items`, {item_name, item_price_dkk})
 }

@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"errors"
 	"github.com/frederikhs/eat-score/database"
 	"github.com/frederikhs/eat-score/middleware"
 	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 func GetAllItems(db *database.Database) gin.HandlerFunc {
@@ -13,6 +15,36 @@ func GetAllItems(db *database.Database) gin.HandlerFunc {
 		authedContext := middleware.MustGetAuthedContext(c)
 
 		items, err := db.GetItems(authedContext.Account.AccountId)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, items)
+	}
+}
+
+func GetAllItemsPaginated(db *database.Database) gin.HandlerFunc {
+	requirePageNoErr := errors.New("page_no must be a positive integer")
+
+	return func(c *gin.Context) {
+		pageNo := c.Query("page_no")
+		if len(pageNo) == 0 {
+			c.JSON(response.UserError(requirePageNoErr))
+			return
+		}
+
+		pageNoInt, err := strconv.Atoi(pageNo)
+		if err != nil || pageNoInt <= 0 {
+			c.JSON(response.UserError(requirePageNoErr))
+			return
+		}
+
+		perPage := 10
+		offset := (pageNoInt - 1) * perPage
+
+		authedContext := middleware.MustGetAuthedContext(c)
+		items, err := db.GetItemsPaginated(authedContext.Account.AccountId, perPage, offset)
 		if err != nil {
 			c.JSON(response.Error(err))
 			return

@@ -58,6 +58,20 @@ func (db *Database) GetItems(accountId int) ([]Item, error) {
 	return items, nil
 }
 
+func (db *Database) GetItemsPaginated(accountId, limit, offset int) ([]Item, error) {
+	var items []Item
+	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL ORDER BY item_created_at DESC LIMIT $2 OFFSET $3", accountId, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	if items == nil {
+		items = []Item{}
+	}
+
+	return items, nil
+}
+
 func (db *Database) GetItemsByVenueId(accountId int, venueId int) ([]Item, error) {
 	var items []Item
 	err := db.Connection.Select(&items, ItemsSelect+" WHERE item_deleted_at IS NULL AND venue_id = $2 ORDER BY item_created_at DESC", accountId, venueId)
