@@ -21,7 +21,7 @@ export default function Rate(props: { venue_id: number, item_id: number, onSubmi
             <div>
                 <button onClick={() => submit()} className={"py-2 pl-3 pr-4 rounded text-white bg-mango-600 hover:bg-mango-700"}>
                     <div className={"flex items-center justify-center space-x-3"}>
-                        <span>Rate</span>
+                        <span className={"w-12"}>Rate</span>
                         <FaPlus/>
                     </div>
                 </button>
