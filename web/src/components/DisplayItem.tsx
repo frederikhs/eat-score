@@ -7,6 +7,7 @@ import {FaArrowsUpDown} from "react-icons/fa6";
 import {useAccount} from "../Root";
 import InfoBadge from "./InfoBadge";
 import RateSlider from "./RateSlider";
+import moment from "moment";
 
 export default function DisplayItem(props: { item: Item, hide_rate_link?: boolean, show_delete_button?: boolean, is_peeking?: boolean }) {
     const {account} = useAccount()
@@ -42,10 +43,15 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
         })
     }
 
-    return (
-        <div className="box">
-            <div className={"mb-2"}>
+    const boxExtraClass = useMemo(() => {
+        return moment(props.item.item_created_at).isSame(moment(), "day")
+            ? "!border-mango-600 dark:border-mango-600 !border-4"
+            : ""
+    }, [props.item])
 
+    return (
+        <div className={`${boxExtraClass} box`}>
+            <div className={"mb-2"}>
                 <div className={"flex justify-between"}>
                     <Link to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}>
                         <h5 className="heading-default hover:underline">{props.item.item_name}</h5>
