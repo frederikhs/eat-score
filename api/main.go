@@ -36,7 +36,7 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			time.Sleep(time.Hour)
+			time.Sleep(time.Hour * 4)
 		}
 	}()
 
