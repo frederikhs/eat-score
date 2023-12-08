@@ -70,7 +70,7 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                 </Link>
             </div>
 
-            <div className={"mb-2"}>
+            <div className={"mb-2 group"}>
                 <div className={"flex items-center space-x-4"}>
                     <RateSlider value={rating} hideValue={!props.is_peeking && !hasRating} disabled={true}/>
 
@@ -79,7 +79,8 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
                             to={`/venues/${props.item.venue_id}/items/${props.item.item_id}`}
                             className={"text-white text-center font-bold flex items-center space-x-1 py-2 px-4 rounded " + (hasRating ? 'bg-gray-300 dark:bg-neutral-600 hover:bg-gray-500 hover:dark:bg-neutral-700' : 'bg-mango-600 hover:bg-mango-700')}
                         >
-                            <span className={"w-12"}>{hasRating ? 'Show' : 'Rate'}</span><FaArrowRight/>
+                            <span className={"w-12"}>{hasRating ? 'Show' : 'Rate'}</span>
+                            <FaArrowRight className={"group-hover:animate-[propel_1s_infinite]"}/>
                         </Link>
                     )}
                 </div>

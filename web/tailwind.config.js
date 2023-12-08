@@ -20,7 +20,14 @@ module.exports = {
           '900': '#7b340c',
           '950': '#471901',
         },
-      }
+      },
+      keyframes: {
+        propel: {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(25%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
     },
   },
   plugins: [],
