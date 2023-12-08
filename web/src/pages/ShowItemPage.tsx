@@ -57,11 +57,16 @@ export default function ShowItemPage() {
             <div className="box">
                 <h1 className={"heading-default"}>Ratings</h1>
                 {item?.has_rated_item === false && (
-                    <p className={`dark:text-white ${isPeeking ? "mb-4" : ""}`}>You need to rate this item to reveal it's score.
+                    <p className={`dark:text-white ${isPeeking ? "mb-4" : ""}`}>
+                        {itemRatings !== null && itemRatings.length == 0 && (
+                            <span>
+                                There are no ratings yet, be the first one to rate
+                            </span>
+                        )}
                         {itemRatings !== null && itemRatings.length > 0 && (
                             <span>
-                                &nbsp;If you want a peak hover&nbsp;
-                                <button onMouseEnter={() => setIsPeeking(true)} onMouseLeave={() => setIsPeeking(false)} className={"hover:underline text-blue-600"}>here</button>
+                                You need to rate this item to reveal it's score, if you are curious hover&nbsp;
+                                <button onMouseEnter={() => setIsPeeking(true)} onMouseLeave={() => setIsPeeking(false)} className={"hover:underline text-blue-600 dark:text-blue-400"}>here</button>
                             </span>
                         )}
                     </p>
