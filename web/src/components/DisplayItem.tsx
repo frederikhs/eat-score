@@ -14,11 +14,11 @@ export default function DisplayItem(props: { item: Item, hide_rate_link?: boolea
     const navigate = useNavigate()
 
     const hasRating = useMemo(() => {
-        if (!props.item.has_rated_item) {
+        if (!props.item.has_rated_item && !props.is_peeking) {
             return false
         }
         return props.item.avg_item_rating_value !== null;
-    }, [props.item])
+    }, [props.item, props.is_peeking])
 
     const rating = useMemo(() => {
         if (hasRating || props.is_peeking) {
