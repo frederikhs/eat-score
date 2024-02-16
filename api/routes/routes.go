@@ -9,7 +9,6 @@ import (
 
 func Register(r *gin.Engine, db *database.Database) {
 	r.GET("/healthz", controllers.HealthCheck())
-	r.POST("/logout", controllers.Logout())
 	r.POST("/login/request", controllers.LoginRequest(db))
 	r.POST("/login", controllers.LoginWithMagicLink(db))
 
@@ -21,6 +20,8 @@ func Register(r *gin.Engine, db *database.Database) {
 
 func registerAuthedRoutes(r *gin.RouterGroup, db *database.Database) {
 	r.GET("/me", controllers.AccountInfo())
+	r.POST("/logout", controllers.Logout(db))
+	r.POST("/logout-other", controllers.LogoutOther(db))
 	r.GET("/accounts/item-rating-statistics", controllers.GetItemRatingAccountStatistics(db))
 
 	r.GET("/venues", controllers.GetAllVenues(db))

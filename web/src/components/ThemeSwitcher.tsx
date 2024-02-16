@@ -24,7 +24,7 @@ export default function ThemeSwitcher() {
     return (
         <button
             onClick={toggleDarkMode}
-            className="py-2 px-3 rounded text-black dark:text-white bg-gray-100 dark:bg-neutral-500 hover:bg-gray-200 dark:hover:bg-neutral-600"
+            className="font-bold py-2 rounded text-black dark:text-white hover:underline"
         >
             <div className={"flex items-center justify-center space-x-3"}>
                 <span>Switch to </span>

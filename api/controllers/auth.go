@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/frederikhs/eat-score/database"
 	"github.com/frederikhs/eat-score/email"
+	"github.com/frederikhs/eat-score/middleware"
 	"github.com/frederikhs/eat-score/response"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -11,10 +12,56 @@ import (
 	"os"
 )
 
-func Logout() func(c *gin.Context) {
+func Logout(db *database.Database) func(c *gin.Context) {
 	return func(c *gin.Context) {
+		authedContext := middleware.MustGetAuthedContext(c)
+
+		err := db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.InvalidateSessionBySessionId(authedContext.Session.SessionId)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
 		c.SetCookie("session_id", "", -1, "/", os.Getenv("WEB_BASE_URI"), os.Getenv("ENVIRONMENT") == "PRODUCTION", true)
 		c.JSON(response.Message(http.StatusOK, "you are now logged out"))
+	}
+}
+
+func LogoutOther(db *database.Database) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		authedContext := middleware.MustGetAuthedContext(c)
+
+		err := db.Connection.Begin()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.InvalidateAllSessionByAccountExceptSessionId(authedContext.Account, authedContext.Session.SessionId)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		err = db.Connection.Commit()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(response.Message(http.StatusOK, "you are now logged out on other sessions"))
 	}
 }
 

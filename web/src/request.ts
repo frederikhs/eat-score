@@ -79,6 +79,10 @@ export const logout = async (): Promise<ApiResponse> => {
     return await postJson(`${BASE_API_URI}/logout`)
 }
 
+export const logoutOther = async (): Promise<ApiResponse> => {
+    return await postJson(`${BASE_API_URI}/logout-other`)
+}
+
 export interface Item {
     item_id: number
     venue_id: number

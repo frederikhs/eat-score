@@ -13,7 +13,9 @@ const SessionIdCookieName = "session_id"
 var (
 	ErrNoSessionCookie            = errors.New("no session id")
 	ErrSessionIdNotFound          = errors.New("session id not found")
+	ErrSessionIdInvalidated       = errors.New("session id is invalidated")
 	ErrAccountNotFoundBySessionId = errors.New("account not found by session id")
+	ErrAccountDeleted             = errors.New("account is deleted")
 )
 
 type LoggedInInfo struct {
@@ -47,6 +49,11 @@ func AuthenticationMiddleware(db *database.Database) gin.HandlerFunc {
 			return
 		}
 
+		if session.InvalidatedAt != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, LoggedInInfo{LoggedIn: false, Message: ErrSessionIdInvalidated.Error()})
+			return
+		}
+
 		account, err := db.GetAccountById(session.SessionAccountId)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, LoggedInInfo{LoggedIn: false, Message: fmt.Errorf("something bad happened: %v", err).Error()})
@@ -55,6 +62,11 @@ func AuthenticationMiddleware(db *database.Database) gin.HandlerFunc {
 
 		if account == nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, LoggedInInfo{LoggedIn: false, Message: ErrAccountNotFoundBySessionId.Error()})
+			return
+		}
+
+		if account.AccountDeletedAt != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, LoggedInInfo{LoggedIn: false, Message: ErrAccountDeleted.Error()})
 			return
 		}
 
