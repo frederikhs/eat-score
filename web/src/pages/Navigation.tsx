@@ -33,8 +33,12 @@ export default function Navigation(props: { authed: boolean, account?: Account }
                     <img src={knife_fork_plate} className="h-8 mr-3" alt="Eat Score Logo"/>
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hover:underline">Eat Score</span>
                 </NavLink>
+                <a href={"https://preview-eat-score.hrgn.dk/"} className="">
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white hover:underline">Try Preview</span>
+                    <div className={"bg-gradient-to-r from-red-800 via-yellow-500 to-green-600 h-1 w-auto"}></div>
+                </a>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <div className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white dark:bg-neutral-900">
+                <div className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white dark:bg-neutral-900">
                         {props.authed && links.map((link, index) => {
                             return (
                                 <MenuLink key={index} link={link} show_title={true}/>
