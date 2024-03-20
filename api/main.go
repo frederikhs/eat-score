@@ -24,7 +24,7 @@ func main() {
 
 	r := gin.Default()
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{os.Getenv("WEB_BASE_URI")}
+	config.AllowOrigins = []string{os.Getenv("WEB_BASE_URI"), os.Getenv("WEB_BASE_URI_V2")}
 	config.AllowCredentials = true
 	r.Use(cors.New(config))
 
