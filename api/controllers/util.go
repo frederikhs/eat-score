@@ -33,6 +33,21 @@ func GetVenueByRouteParam(db *database.Database, c *gin.Context) (*database.Venu
 	return venue, nil
 }
 
+func GetItemByRouteParam(db *database.Database, c *gin.Context) (*database.Item, error) {
+	id, err := strconv.Atoi(c.Param("item_id"))
+	if err != nil {
+		return nil, fmt.Errorf("could not parse item_id: %v", ErrCouldNotParseInt)
+	}
+
+	authedContext := middleware.MustGetAuthedContext(c)
+	item, err := db.GetItemById(authedContext.Account.AccountId, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return item, nil
+}
+
 func GetVenueItemByRouteParams(db *database.Database, c *gin.Context) (*database.Venue, *database.Item, error) {
 	venue, err := GetVenueByRouteParam(db, c)
 	if err != nil {

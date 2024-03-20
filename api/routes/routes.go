@@ -24,6 +24,8 @@ func registerAuthedRoutes(r *gin.RouterGroup, db *database.Database) {
 	r.POST("/logout-other", controllers.LogoutOther(db))
 	r.GET("/accounts/item-rating-statistics", controllers.GetItemRatingAccountStatistics(db))
 
+	r.GET("/items/:item_id", controllers.GetItemByItemId(db))
+
 	r.GET("/venues", controllers.GetAllVenues(db))
 	r.POST("/venues", controllers.CreateVenue(db))
 	r.GET("/venues/:venue_id", controllers.GetVenueById(db))

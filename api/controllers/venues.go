@@ -74,6 +74,18 @@ func GetVenueItemByVenueIdAndItemId(db *database.Database) gin.HandlerFunc {
 	}
 }
 
+func GetItemByItemId(db *database.Database) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		item, err := GetItemByRouteParam(db, c)
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, item)
+	}
+}
+
 func GetVenueItemRatingsByVenueIdAndItemId(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		venue, item, err := GetVenueItemByRouteParams(db, c)
