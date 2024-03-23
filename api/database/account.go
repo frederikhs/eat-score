@@ -37,3 +37,13 @@ func (db *Database) GetAccountByEmail(email string) (*Account, error) {
 
 	return &accounts[0], nil
 }
+
+func (db *Database) GetAllAccounts() ([]Account, error) {
+	var accounts []Account
+	err := db.Connection.Select(&accounts, "SELECT * FROM eat_score.account WHERE account_deleted_at IS NULL AND account_id > 0 ORDER BY account_name")
+	if err != nil {
+		return nil, err
+	}
+
+	return accounts, nil
+}

@@ -272,3 +272,15 @@ func GetItemRatingAccountStatistics(db *database.Database) gin.HandlerFunc {
 		c.JSON(http.StatusOK, stats)
 	}
 }
+
+func GetAccounts(db *database.Database) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		stats, err := db.GetAllAccounts()
+		if err != nil {
+			c.JSON(response.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, stats)
+	}
+}
