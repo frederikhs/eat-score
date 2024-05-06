@@ -3,13 +3,11 @@ package main
 import (
 	"github.com/frederikhs/eat-score/database"
 	"github.com/frederikhs/eat-score/routes"
-	"github.com/frederikhs/eat-score/sandsmad"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"time"
 )
 
 func main() {
@@ -29,16 +27,6 @@ func main() {
 	r.Use(cors.New(config))
 
 	routes.Register(r, db)
-
-	go func() {
-		for {
-			err := sandsmad.Run(db)
-			if err != nil {
-				log.Println(err)
-			}
-			time.Sleep(time.Hour * 4)
-		}
-	}()
 
 	log.Fatal(r.Run(":8080"))
 }
