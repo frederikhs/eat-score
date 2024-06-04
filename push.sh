@@ -7,5 +7,5 @@ NEXTVERSION=$(echo ${CURRENT_VERSION} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 echo "curren tag: ${CURRENT_VERSION}"
 echo "next tag: ${NEXTVERSION}"
 
-TAG=$NEXTVERSION docker compose --env-file .env.prod build
+TAG=$NEXTVERSION docker compose --env-file .env.prod build --builder default
 TAG=$NEXTVERSION docker compose --env-file .env.prod push
